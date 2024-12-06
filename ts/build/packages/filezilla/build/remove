@@ -1,0 +1,4 @@
+#!/bin/sh
+
+export PACKAGE=filezilla
+repackage -c

@@ -1,0 +1,9 @@
+#!/bin/sh
+
+export PACKAGE=open-vm-tools
+export PORTS="open-vm-tools open-vm-tools-desktop"
+repackage -e
+
+returnval=$?
+
+exit $returnval

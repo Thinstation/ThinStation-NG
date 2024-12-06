@@ -1,0 +1,10 @@
+[Unit]
+Description=Command Scheduler
+After=tsinit.target crontab.service
+
+[Service]
+ExecStart=/sbin/crond -f
+KillMode=process
+
+[Install]
+WantedBy=tsinit.target

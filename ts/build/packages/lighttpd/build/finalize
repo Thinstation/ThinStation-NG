@@ -1,0 +1,4 @@
+#lighttpd 60
+
+systemctl enable lighttpd
+chown -R lighttpd:lighttpd /var/www/lighttpd

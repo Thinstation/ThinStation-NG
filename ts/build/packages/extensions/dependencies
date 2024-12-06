@@ -1,0 +1,8 @@
+base
+hwdata
+bash
+wget
+#ca-bundle
+ca-certificates
+hwlister
+nano

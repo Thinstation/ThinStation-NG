@@ -1,0 +1,5 @@
+#!/bin/sh
+
+export PACKAGE=pavucontrol
+repackage -c
+

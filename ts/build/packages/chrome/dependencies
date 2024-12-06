@@ -1,0 +1,16 @@
+base
+pango
+#messagebox
+alsa
+dbus
+gtk-3.0
+nss
+#curl
+#gnome-core
+bash
+#ca-bundle
+ca-certificates
+jq
+nss-softokn
+p11-kit
+vulkan

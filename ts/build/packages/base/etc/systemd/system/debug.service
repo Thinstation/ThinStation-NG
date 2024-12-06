@@ -1,0 +1,14 @@
+[Unit]
+Description=ThinStation Debug Configuration
+DefaultDependencies=no
+ConditionPathExists=/etc/fstab
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+EnvironmentFile=/etc/thinstation.env
+ExecStart=/etc/init.d/debug
+SyslogIdentifier=thinstation
+
+[Install]
+WantedBy=sysinit.target

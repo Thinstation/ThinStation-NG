@@ -1,0 +1,8 @@
+terminfo
+busybox-shared
+kmod
+systemd
+base-nss
+bash
+crypto-policies
+libbpf

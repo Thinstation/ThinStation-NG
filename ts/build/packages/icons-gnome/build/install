@@ -1,0 +1,9 @@
+#!/bin/sh
+
+export PACKAGE=icons-gnome
+export PORTS=gnome-icon-theme
+repackage -e
+
+returnval=$?
+
+exit $returnval

@@ -1,0 +1,4 @@
+#!/bin/sh
+
+export PACKAGE=gst-plugins-base
+repackage -c

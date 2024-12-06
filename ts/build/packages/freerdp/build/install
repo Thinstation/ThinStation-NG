@@ -1,0 +1,9 @@
+#!/bin/sh
+
+export PACKAGE=freerdp
+export PORTS="freerdp freerdp-libs"
+repackage -e
+
+returnval=$?
+
+exit $returnval

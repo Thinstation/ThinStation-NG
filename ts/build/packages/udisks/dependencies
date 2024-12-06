@@ -1,0 +1,5 @@
+dbus
+sg3_utils
+polkit
+sudo 
+libblockdev

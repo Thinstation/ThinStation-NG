@@ -1,0 +1,14 @@
+base
+parted
+git
+messagebox
+bash
+ca-certificates
+wget
+yad
+tzupdate
+#btrfs-progs
+lvm2
+util-linux
+e2fsprogs
+dnf
