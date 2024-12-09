@@ -1,7 +1,8 @@
 [Unit]
 Description=firewalld - dynamic firewall daemon
 Documentation=man:firewalld(1)
-After=fastboot.service
+After=fastboot.service persistent-dirs.service persistent-files.service
+Before=tsinit.target
 
 [Service]
 EnvironmentFile=-/etc/sysconfig/firewalld
@@ -32,5 +33,5 @@ RestrictSUIDSGID=yes
 SystemCallArchitectures=native
 
 [Install]
-WantedBy=tsinit.target
+WantedBy=multi-user.target
 Alias=dbus-org.fedoraproject.FirewallD1.service
