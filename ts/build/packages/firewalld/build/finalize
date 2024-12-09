@@ -1,0 +1,3 @@
+#firewalld 30
+systemctl enable firewalld
+

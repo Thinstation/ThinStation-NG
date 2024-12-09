@@ -6,9 +6,8 @@ ConditionPathExists=/var/prstnt/etc/NetworkManager
 
 [Service]
 Type=oneshot
-ExecStartPre=/bin/systemctl stop NetworkManager
 ExecStartPre=/bin/rm -rf /run/NetworkManager
-ExecStart=/bin/systemctl start NetworkManager
+ExecStart=/bin/nmcli connection reload
 ExecStartPost=nm-online -s -q
 
 [Install]

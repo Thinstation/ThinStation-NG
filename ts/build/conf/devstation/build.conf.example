@@ -124,7 +124,7 @@ package gst-plugins-base
 package gst-plugins-good
 package gst-libav
 package libva
-package nftables		# IP Tables support
+package firewalld		# Firewall daemon
 package cpupower
 #package wine			# Windows Application Execution Platform
 package nmap

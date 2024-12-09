@@ -1,0 +1,2 @@
+firewall-cmd --add-service=ipp
+firewall-cmd --add-service=ipp-client

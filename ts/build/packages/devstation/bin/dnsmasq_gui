@@ -222,68 +222,49 @@ EOF
 	UUID=`nmcli con show |grep -e $LAN_INTERFACE |cut -c 21-56`
 	if [ -n "$UUID" ]; then
 		for interface in $UUID; do
-		nmcli con down $interface
-		nmcli con del $interface
-	done
+			nmcli con down $interface
+			nmcli con del $interface
+		done
 	fi
 	nmcli con add type ethernet con-name $LAN_INTERFACE \
 		ifname $LAN_INTERFACE \
 		ipv4.addresses ${LAN_IP_1}.${LAN_IP_2}.${LAN_IP_3}.${LAN_IP_4}/$LAN_NETMASK \
 		ipv4.gateway ${LAN_IP_1}.${LAN_IP_2}.${LAN_IP_3}.${LAN_IP_4} \
 		ipv4.method manual
-	find /etc/NetworkManager/system-connections -type f -empty -exec rm {} \;
-	nmcli con up "$LAN_INTERFACE"
+        nmcli con up "$LAN_INTERFACE"
 
-cat << EOF > /etc/nftables/nftables.d/dnsmasq.conf
+	WAN_UUID=`nmcli con show |grep -e $WAN_INTERFACE |cut -c 21-56`
+	nmcli connection modify "$WAN_UUID" connection.id "$WAN_INTERFACE"
+	nmcli connection modify $LAN_INTERFACE connection.zone internal
+	nmcli connection modify $WAN_INTERFACE connection.zone external
+	nmcli connection reload
 
-	# Enable IPv4 and IPv6 forwarding
-	echo 1 > /proc/sys/net/ipv4/ip_forward
-	echo 1 > /proc/sys/net/ipv6/conf/all/forwarding
+        find /etc/NetworkManager/system-connections -type f -empty -exec rm {} \;
 
-	# Create NAT table and chain (IPv4 NAT only)
-	nft add table inet nat
-	nft add chain inet nat postrouting { type nat hook postrouting priority 100 \; policy accept \; }
-	nft add rule inet nat postrouting oifname "$WAN_INTERFACE" masquerade
-
-	# Create Filter table and chain
-	nft add table inet filter
-	nft add chain inet filter forward { type filter hook forward priority 0 \; policy drop \; }
-
-	# Forward IPv4/IPv6 traffic from LAN to WAN
-	nft add rule inet filter forward iifname "$LAN_INTERFACE" oifname "$WAN_INTERFACE" accept
-
-	# Allow established and related connections
-	nft add rule inet filter forward ct state related,established accept
-
-	# Allow essential ICMPv6 traffic
-	nft add rule inet filter forward icmpv6 type { destination-unreachable, packet-too-big, time-exceeded, parameter-problem, echo-request, echo-reply } accept
-
-	# Allow IPv6 Neighbor Discovery (NDP)
-	nft add rule inet filter forward ip6 nexthdr icmpv6 icmpv6 type { nd-neighbor-solicit, nd-neighbor-advert, nd-router-advert } accept
-
-	# Allow DNS traffic (UDP/TCP port 53)
-	nft add rule inet filter forward iifname "$LAN_INTERFACE" udp dport 53 accept
-	nft add rule inet filter forward iifname "$LAN_INTERFACE" tcp dport 53 accept
-
-	# Allow DHCPv4 traffic (UDP ports 67-68)
-	nft add rule inet filter forward iifname "$LAN_INTERFACE" udp sport 68 dport 67 accept
-
-	# Allow DHCPv6 traffic (UDP ports 546-547)
-	nft add rule inet filter forward iifname "$LAN_INTERFACE" udp sport 546 dport 547 accept
-EOF
+	firewall-cmd --permanent --zone=external --add-masquerade
+	firewall-cmd --permanent --zone=internal --set-target=ACCEPT
+	firewall-cmd --permanent --zone=internal --add-service=http --add-service=tftp --add-service=dns --add-service=dhcp --add-service=ipp --add-service=ipp-client
+	firewall-cmd --reload
 
 	# Start dnsmasq
-	systemctl restart nftables
 	systemctl start dnsmasq
 }
 
 disable_dnsmasq()
 {
 	systemctl stop dnsmasq
-	rm /etc/nftables/nftables.d/dnsmasq.conf
+	rm $DNSMASQ_CONFIG_FILE
 
 	nmcli con down $LAN_INTERFACE
-	systemctl restart nftables
+	nmcli connection modify $LAN_INTERFACE connection.zone public
+        nmcli connection modify $WAN_INTERFACE connection.zone public
+	nmcli connection reload
+
+	find /etc/NetworkManager/system-connections -type f -empty -exec rm {} \;
+
+        firewall-cmd --permanent --zone=external --remove-masquerade
+        firewall-cmd --permanent --zone=internal --set-target=DROP
+        firewall-cmd --reload
 }
 
 status_dnsmasq()
