@@ -221,7 +221,7 @@ if is_enabled $INSTALLER_DEV; then
 		if [ "$COUNTER" -lt "3" ]; then
 			echo "Something went wrong with the clone, retying."
 		fi
-		git clone --depth 1 https://github.com/Thinstation/thinstation.git -b $TS_VERSION-Stable /thinstation
+		git clone --depth 1 https://github.com/Thinstation/thinstation-ng.git -b $TS_VERSION-Stable /thinstation
 		let COUNTER-=1
 	done
 
