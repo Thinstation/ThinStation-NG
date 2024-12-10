@@ -62,11 +62,48 @@ The **DevStation** image is installed through the DevStation **Installer**, whic
     - Setup the build environment.
 5. Once installed, reboot into the DevStation environment.
 
+## Importing ThinStation into WSL and Setting Up the Development Environment
+
+To get started with ThinStation on a Windows system using Windows Subsystem for Linux (WSL), follow these steps to download the distribution tarball, import it into WSL, and prepare your development environment.
+
+### Step 1: Download the ThinStation Tarball
+
+1. Download a root fs from the official ThinStation website [here](https://www.thinstation.org/thinstation.tar.xz).
+2. Once downloaded, expand the archive to for example `Downloads/thinstation.tar`.
+
+### Step 2: Import ThinStation into WSL
+
+1. Open Windows Terminal or your preferred PowerShell or Command Prompt interface.
+2. Ensure WSL is installed on your system. If not, you can install it by following the official Microsoft guide.
+3. Use the following command to import ThinStation into WSL:
+
+   ```bash
+   wsl --import ThinStation $HOME\WSL\ThinStation $HOME\Downloads\thinstation.tar
+   ```
+
+### Step 3: Clone the ThinStation-ng Repository
+
+1. Launch the ThinStation distribution in WSL by typing:
+
+   ```bash
+   wsl -d ThinStation
+   ```
+2. Clone the ThinStation-ng repository:
+
+   ```bash
+   git clone https://www.github.com/thinstation/thinstation-ng.git
+   cd thinstation-ng
+   ```
+
+## Notes
+
+- Ensure that you have sufficient disk space and permissions to perform these operations.
+- For detailed build instructions and options, refer to the ThinStation Wiki and the README files within the repository.
 ## Getting Started
 
 1. **Prepare the Development Environment**
 
-   - On a Fedora host or DevStation, ensure you have access to the `setup-chroot` script located in the ThinStation repository.
+   - On a Fedora host or DevStation or WSL, ensure you have access to the `setup-chroot` script located in the ThinStation repository.
    - Run the script to initialize the development environment:
 
          ./setup-chroot
