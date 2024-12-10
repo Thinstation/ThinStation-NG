@@ -41,7 +41,7 @@ ThinStation now requires either:
 
 - Clone the ThinStation repository:
 
-      git clone https://github.com/Thinstation/thinstation.git
+      git clone https://github.com/Thinstation/thinstation-ng.git
       cd thinstation
 
 ### Using the DevStation Installer
@@ -121,6 +121,6 @@ The **DevStation** image is installed through the DevStation **Installer**, whic
 For detailed instructions, troubleshooting, and additional resources, visit the ThinStation Wiki.
 
 If you encounter issues or require assistance:
-- Open an issue on the [ThinStation GitHub repository](https://github.com/Thinstation/thinstation/issues).
+- Open an issue on the [ThinStation GitHub repository](https://github.com/Thinstation/thinstation-ng/issues).
 - Join the discussion on the ThinStation mailing list or community forums.
 
