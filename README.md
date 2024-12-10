@@ -3,7 +3,7 @@
 
 README - Displaying this file can be disabled by touching `/ts/etc/READ`
 
-Visit the ThinStation [Wiki](https://github.com/Thinstation/thinstation/wiki/Getting-Started-with-ThinStation)
+Visit the ThinStation [Wiki](https://github.com/Thinstation/thinstation-ng/wiki/Getting-Started-with-ThinStation)
 
 ThinStation is a small, yet powerful, Open Source thin client operating system supporting:
 Citrix ICA, Redhat Spice, NoMachine NX, Microsoft Windows terminal services (RDP, via FreeRDP), VMware Horizon View, Cendio ThinLinc, X and SSH.
@@ -96,7 +96,7 @@ The **DevStation** image is installed through the DevStation **Installer**, whic
 3. **Deploy ThinStation**
 
    - Once the build completes, your ThinStation images will be ready in /build/boot-images/grub of the chroot.
-   - Follow the [deployment](https://github.com/Thinstation/thinstation/wiki/Deployment) guide on the ThinStation Wiki for details on deploying ThinStation to your environment.
+   - Follow the [deployment](https://github.com/Thinstation/thinstation-ng/wiki/Deployment) guide on the ThinStation Wiki for details on deploying ThinStation to your environment.
 
 ## Notes for End Users
 
