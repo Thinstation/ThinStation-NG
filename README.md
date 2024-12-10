@@ -62,16 +62,16 @@ The **DevStation** image is installed through the DevStation **Installer**, whic
     - Setup the build environment.
 5. Once installed, reboot into the DevStation environment.
 
-## Importing ThinStation into WSL and Setting Up the Development Environment
+### Importing ThinStation into WSL and Setting Up the Development Environment
 
 To get started with ThinStation on a Windows system using Windows Subsystem for Linux (WSL), follow these steps to download the distribution tarball, import it into WSL, and prepare your development environment.
 
-### Step 1: Download the ThinStation Tarball
+#### Step 1: Download the ThinStation Tarball
 
 1. Download a root fs from the official ThinStation website [here](https://www.thinstation.org/thinstation.tar.xz).
 2. Once downloaded, expand the archive to for example `Downloads/thinstation.tar`.
 
-### Step 2: Import ThinStation into WSL
+#### Step 2: Import ThinStation into WSL
 
 1. Open Windows Terminal or your preferred PowerShell or Command Prompt interface.
 2. Ensure WSL is installed on your system. If not, you can install it by following the official Microsoft guide.
@@ -81,7 +81,7 @@ To get started with ThinStation on a Windows system using Windows Subsystem for 
    wsl --import ThinStation $HOME\WSL\ThinStation $HOME\Downloads\thinstation.tar
    ```
 
-### Step 3: Clone the ThinStation-ng Repository
+#### Step 3: Clone the ThinStation-ng Repository
 
 1. Launch the ThinStation distribution in WSL by typing:
 
