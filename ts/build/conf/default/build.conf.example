@@ -140,6 +140,7 @@ package autonet              # Legacy automatic network configuration
 #package wireless             # Wireless tools and drivers
 #package wpa_supplicant       # WPA/WPA2/802.1X supplicant for Wi-Fi
 #package nftables             # Netfilter tables for firewalling
+#package firewalld            # A whole firewalling daemon
 #package avahi                # Service discovery using mDNS/DNS-SD (e.g., local printers and file shares)
 
 ###############################
