@@ -81,7 +81,7 @@ To get started with ThinStation on a Windows system using Windows Subsystem for 
    wsl --import ThinStation $HOME\WSL\ThinStation $HOME\Downloads\thinstation.tar
    ```
 
-#### Step 3: Clone the ThinStation-ng Repository
+#### Step 3: Clone the thinstation-ng Repository
 
 1. Launch the ThinStation distribution in WSL by typing:
 
