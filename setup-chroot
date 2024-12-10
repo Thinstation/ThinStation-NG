@@ -155,6 +155,16 @@ do_mounts()
 			mount --bind /run/user/$SUDO_UID run/user/$SUDO_UID
 		fi
 	fi
+	if [ -e /mnt/wsl ]; then
+		for mount in `ls -A /mnt`; do
+			if mounted /mnt/$mount; then
+				if ! mounted mnt/$mount; then
+					mkdir -p mnt/$mount
+					mount --bind /mnt/$mount mnt/$mount
+				fi
+			fi
+		done
+	fi
 }
 
 copy_host_essential()
@@ -166,6 +176,8 @@ copy_host_essential()
 #		cp -a $auth_file $PWD$auth_dir/.
 #	fi
 #	cp -f /etc/resolv.conf etc/resolv.conf
+	rm -f etc/resolv.conf
+	cp -a /etc/resolv.conf etc/resolv.conf
 	if ${keys:=false}; then
 		if [ -e ~/.ssh ]; then
 			mkdir -p root
@@ -233,6 +245,13 @@ do_unmounts()
 			done
 		fi
 	done
+	if [ -e mnt/wsl ]; then
+		for mount in `ls -A mnt`; do
+			while mounted mnt/$mount; do
+				umount -l mnt/$mount
+			done
+		done
+	fi
 }
 
 main()
