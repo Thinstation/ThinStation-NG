@@ -88,7 +88,7 @@ To get started with ThinStation on a Windows system using Windows Subsystem for 
    ```bash
    wsl -d ThinStation
    ```
-2. Clone the ThinStation-ng repository:
+2. Clone the thinstation-ng repository:
 
    ```bash
    git clone https://www.github.com/thinstation/thinstation-ng.git
