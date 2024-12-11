@@ -104,9 +104,12 @@ log_interface()
 
 manual_config()
 {
-	echo "nameserver $NET_DNS1" > /etc/resolv.conf
-	echo "nameserver $NET_DNS2" >> /etc/resolv.conf
-	echo "search $NET_DNS_SEARCH" >> /etc/resolv.conf
+	if [ -n "$NET_DNS1" ]; then
+		resolvectl dns $INTERFACE $NET_DNS1 $NET_DNS2
+	fi
+	if [ -n "$NET_DNS_SEARCH" ]; then
+		resolvectl domain $INTERFACE $NET_DNS_SEARCH
+	fi
 	if ifconfig $INTERFACE $NET_IP_ADDRESS netmask $NET_MASK ; then
 		NETWORKUP=TRUE
 		echo "NETWORKUP=TRUE" >> /var/log/net/$INTERFACE
