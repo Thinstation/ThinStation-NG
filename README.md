@@ -3,7 +3,7 @@
 
 README - Displaying this file can be disabled by touching `/ts/etc/READ`
 
-Visit the ThinStation [Wiki](https://github.com/Thinstation/thinstation/wiki/Getting-Started-with-ThinStation)
+Visit the ThinStation [Wiki](https://github.com/Thinstation/thinstation-ng/wiki/Getting-Started-with-ThinStation)
 
 ThinStation is a small, yet powerful, Open Source thin client operating system supporting:
 Citrix ICA, Redhat Spice, NoMachine NX, Microsoft Windows terminal services (RDP, via FreeRDP), VMware Horizon View, Cendio ThinLinc, X and SSH.
@@ -41,7 +41,7 @@ ThinStation now requires either:
 
 - Clone the ThinStation repository:
 
-      git clone https://github.com/Thinstation/thinstation.git
+      git clone https://github.com/Thinstation/thinstation-ng.git
       cd thinstation
 
 ### Using the DevStation Installer
@@ -52,7 +52,7 @@ The **DevStation** image is installed through the DevStation **Installer**, whic
 
 #### Steps to Use the DevStation Installer:
 
-1. Download the DevStation Installer from the ThinStation [Website](https://www.thinstation.org/TS-7.0.0-Installer-1130.iso)
+1. Download the DevStation Installer from the ThinStation [Website](https://www.thinstation.org/TS-7.0.0-Installer-1209.iso)
 2. Boot the installer on your system.
 3. Follow the prompts to:
     - Collect credentials.
@@ -62,11 +62,48 @@ The **DevStation** image is installed through the DevStation **Installer**, whic
     - Setup the build environment.
 5. Once installed, reboot into the DevStation environment.
 
+### Importing ThinStation into WSL and Setting Up the Development Environment
+
+To get started with ThinStation on a Windows system using Windows Subsystem for Linux (WSL), follow these steps to download the distribution tarball, import it into WSL, and prepare your development environment.
+
+#### Step 1: Download the ThinStation Tarball
+
+1. Download a root fs from the official ThinStation website [here](https://www.thinstation.org/thinstation.tar.xz).
+2. Once downloaded, expand the archive to for example `Downloads/thinstation.tar`.
+
+#### Step 2: Import ThinStation into WSL
+
+1. Open Windows Terminal or your preferred PowerShell or Command Prompt interface.
+2. Ensure WSL is installed on your system. If not, you can install it by following the official Microsoft guide.
+3. Use the following command to import ThinStation into WSL:
+
+   ```bash
+   wsl --import ThinStation $HOME\WSL\ThinStation $HOME\Downloads\thinstation.tar
+   ```
+
+#### Step 3: Clone the thinstation-ng Repository
+
+1. Launch the ThinStation distribution in WSL by typing:
+
+   ```bash
+   wsl -d ThinStation
+   ```
+2. Clone the thinstation-ng repository:
+
+   ```bash
+   git clone https://www.github.com/thinstation/thinstation-ng.git
+   cd thinstation-ng
+   ```
+
+## Notes
+
+- Ensure that you have sufficient disk space and permissions to perform these operations.
+- For detailed build instructions and options, refer to the ThinStation Wiki and the README files within the repository.
 ## Getting Started
 
 1. **Prepare the Development Environment**
 
-   - On a Fedora host or DevStation, ensure you have access to the `setup-chroot` script located in the ThinStation repository.
+   - On a Fedora host or DevStation or WSL, ensure you have access to the `setup-chroot` script located in the ThinStation repository.
    - Run the script to initialize the development environment:
 
          ./setup-chroot
@@ -96,7 +133,7 @@ The **DevStation** image is installed through the DevStation **Installer**, whic
 3. **Deploy ThinStation**
 
    - Once the build completes, your ThinStation images will be ready in /build/boot-images/grub of the chroot.
-   - Follow the [deployment](https://github.com/Thinstation/thinstation/wiki/Deployment) guide on the ThinStation Wiki for details on deploying ThinStation to your environment.
+   - Follow the [deployment](https://github.com/Thinstation/thinstation-ng/wiki/Deployment) guide on the ThinStation Wiki for details on deploying ThinStation to your environment.
 
 ## Notes for End Users
 
@@ -121,6 +158,6 @@ The **DevStation** image is installed through the DevStation **Installer**, whic
 For detailed instructions, troubleshooting, and additional resources, visit the ThinStation Wiki.
 
 If you encounter issues or require assistance:
-- Open an issue on the [ThinStation GitHub repository](https://github.com/Thinstation/thinstation/issues).
+- Open an issue on the [ThinStation GitHub repository](https://github.com/Thinstation/thinstation-ng/issues).
 - Join the discussion on the ThinStation mailing list or community forums.
 
