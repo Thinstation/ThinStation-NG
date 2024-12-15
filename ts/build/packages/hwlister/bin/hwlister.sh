@@ -4,11 +4,9 @@
 
 rm -rf /vbe_modes.list /firmware.list /module.list /package.list
 
-bday=`stat -c %X /etc/index.html`
-
 firmware_loaded()
 {
-	if [ -n "`stat -c '%X' $1 | grep -v \"$bday\"`" ]; then
+	if [ "`stat -c '%X' $1`" != "`stat -c '%Z' $1`" ]; then
 		return 0
 	else
 		return 1
