@@ -1,2 +1,2 @@
-#pipewire 80
+#pulseaudio-utils 80
 echo "/etc/init.d/audio" >> /etc/skel/.xinitrc
