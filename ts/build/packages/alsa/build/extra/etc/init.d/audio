@@ -14,7 +14,6 @@ have_control()
 	fi
 }
 
-if ! pkg_initialized $PACKAGE; then
 	for card in `grep -e "]:" /proc/asound/cards |cut -c2`; do
 		if [ -n "$AUDIO_LEVEL" ]; then
 			for control in Master PCM CD Video; do
@@ -22,6 +21,9 @@ if ! pkg_initialized $PACKAGE; then
 					amixer sset -c $card $control $AUDIO_LEVEL% unmute
 				fi
 			done
+			if which pactl; then
+				pactl set-sink-volume @DEFAULT_SINK@ $AUDIO_LEVEL%
+			fi
 		fi
 		if [ -n "$MIC_LEVEL" ] && [ "$MIC_LEVEL" -gt "0" ]; then
 			if [ -z "$MIC_DEVICE" ]; then MIC_DEVICE=Mic; fi
@@ -35,6 +37,9 @@ if ! pkg_initialized $PACKAGE; then
 			elif have_control Capture; then
 				amixer sset Capture 0%
 			fi
+			if which pactl; then
+				pactl set-source-volume @DEFAULT_SOURCE@ $MIC_LEVEL%
+			fi
 		fi
 		for control in $UNMUTE; do
 			if have_control $control; then
@@ -47,5 +52,3 @@ if ! pkg_initialized $PACKAGE; then
 			fi
 		done
 	done
-	pkg_set_init_flag $PACKAGE
-fi

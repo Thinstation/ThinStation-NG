@@ -1,2 +1,2 @@
 #pipewire 80
-#systemctl enable pipewire.socket
+echo "/etc/init.d/audio" >> /etc/skel/.xinitrc
