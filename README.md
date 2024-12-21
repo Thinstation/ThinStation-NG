@@ -37,12 +37,16 @@ ThinStation now requires either:
 
 - Install required dependencies:
 
-      sudo dnf install dnf chroot git
+   ```bash
+   sudo dnf install dnf chroot git
+   ```
 
 - Clone the ThinStation repository:
 
-      git clone https://github.com/Thinstation/thinstation-ng.git
-      cd thinstation
+   ```bash
+   git clone https://github.com/Thinstation/thinstation-ng.git
+   cd thinstation
+   ```
 
 ### Using the DevStation Installer
 
@@ -107,7 +111,9 @@ To get started with ThinStation on a Windows system using Windows Subsystem for 
    - On a Fedora host or DevStation or WSL, ensure you have access to the `setup-chroot` script located in the ThinStation repository.
    - Run the script to initialize the development environment:
 
-         ./setup-chroot
+   ```bash
+   ./setup-chroot
+   ```
 
    - This will:
       - Populate necessary directories and dependencies.
@@ -117,11 +123,15 @@ To get started with ThinStation on a Windows system using Windows Subsystem for 
 
    - Enter the chroot environment:
 
-         ./setup-chroot
+   ```bash
+   ./setup-chroot
+   ```
 
    - Navigate to the build directory:
 
-         cd /build
+   ```bash
+   cd /build
+   ```
 
    - Configure your build by editing the following files:
       - `build.conf`: Defines the overall build configuration.
@@ -129,7 +139,9 @@ To get started with ThinStation on a Windows system using Windows Subsystem for 
 
    - Run the build process:
 
-         ./build
+   ```bash
+   ./build
+   ```
 
 3. **Deploy ThinStation**
 
