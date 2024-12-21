@@ -99,6 +99,7 @@ To get started with ThinStation on a Windows system using Windows Subsystem for 
 
 - Ensure that you have sufficient disk space and permissions to perform these operations.
 - For detailed build instructions and options, refer to the ThinStation Wiki and the README files within the repository.
+
 ## Getting Started
 
 1. **Prepare the Development Environment**
