@@ -19,16 +19,14 @@ UtmpIdentifier=tty1
 TTYPath=/dev/tty1
 TTYReset=yes
 TTYVHangup=yes
-TTYVTDisallocate=yes
+#TTYVTDisallocate=yes
 KillMode=process
-StandardOutput=null
-StandardError=null
 IgnoreSIGPIPE=no
 SendSIGHUP=yes
 
 # Unset locale for the console getty since the console has problems
 # displaying some internationalized messages.
-# Environment=LANG= LANGUAGE= LC_CTYPE= LC_NUMERIC= LC_TIME= LC_COLLATE= LC_MONETARY= LC_MESSAGES= LC_PAPER= LC_NAME= LC_ADDRESS= LC_TELEPHONE= LC_MEASUREMENT= LC_IDENTIFICATION=
+#Environment=LANG= LANGUAGE= LC_CTYPE= LC_NUMERIC= LC_TIME= LC_COLLATE= LC_MONETARY= LC_MESSAGES= LC_PAPER= LC_NAME= LC_ADDRESS= LC_TELEPHONE= LC_MEASUREMENT= LC_IDENTIFICATION=
 
 [Install]
 DefaultInstance=tty1
