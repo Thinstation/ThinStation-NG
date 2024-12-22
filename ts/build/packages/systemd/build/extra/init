@@ -12,6 +12,9 @@ if [ -e /proc/cmdline ]; then
         echo "$MACHINE_ID" > /etc/machine-id
         chmod 0444 /etc/machine-id
     fi
+    if grep -q /proc/cmdline -e quiet; then
+	clear
+    fi
 fi
 
 # Hand over control to systemd

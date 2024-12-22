@@ -11,8 +11,7 @@ OnFailure=plymouth-quit.service
 
 [Service]
 # the VT is cleared by TTYVTDisallocate
-ExecStartPre=clear
-ExecStart=-/sbin/agetty -c --skip-login --nohints --noissue --nohostname -a tsuser tty1 115200 linux
+ExecStart=-/sbin/agetty -c --skip-login --noclear --nohints --noissue --nohostname -a tsuser tty1 115200 linux
 Type=idle
 Restart=always
 RestartSec=0

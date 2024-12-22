@@ -247,7 +247,7 @@ package xfwm4                # XFCE window manager
 #package xfce4-power-manager  # Power management for XFCE
 
 # Display Manager
-package lightdm              # Lightweight display manager
+#package lightdm              # Lightweight display manager
 #package light-locker         # Session locker for LightDM
 
 # Utilities
