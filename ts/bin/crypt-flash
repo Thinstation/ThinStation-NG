@@ -32,6 +32,10 @@ parted $DISK --script name 2 SafeStore  # Set the PARTLABEL to 'SafeStore'
 # Setup LUKS encryption on the new partition
 #cryptsetup luksFormat -y --force-password ${DISK}${p}2
 echo -n "testtest" | cryptsetup luksFormat -q --force-password ${DISK}${p}2 -
+cryptsetup token import --token-id 0 /dev/loop0p2 --json-file /ts/etc/admin_token.json
+
+echo -en "testtest\ntest2test2" |cryptsetup luksAddKey -q --force-password ${DISK}${p}2 --key-slot 1 -
+cryptsetup token import --token-id 1 /dev/loop0p2 --json-file /ts/etc/user_token.json
 
 # Open the encrypted LUKS partition
 #cryptsetup open ${DISK}${p}2 cryptdisk
