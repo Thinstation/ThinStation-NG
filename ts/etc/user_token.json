@@ -1,0 +1,10 @@
+{
+  "type": "luks2",
+  "keyslots": ["1"],
+  "token": {
+    "type": "custom",
+    "data": {
+      "role": "User"
+    }
+  }
+}
