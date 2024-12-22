@@ -9,6 +9,13 @@ for var in $(compgen -v | grep '^MOUNT_'); do
     fi
 done
 
+for var in $(compgen -v | grep '^CRYPT_'); do
+    crypt="${!var}"
+    if [ -n "$crypt" ]; then
+        echo -e "$(echo "$crypt" | sed -e 's/[ ]\+/\t/g')" >> /etc/crypttab
+    fi
+done
+
 for i in /*; do
   if [ $i != "/dev" ] && [ $i != "/proc" ] && [ $i != "/tmp" ]; then
 #    chown -R root:root $i

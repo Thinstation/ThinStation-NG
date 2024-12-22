@@ -13,8 +13,8 @@ if [ "$INTERFACE" != "lo" ]; then
 		CLIENT_NAME=$HOSTNAME
 	;;
 	up|dhcp4-change)
-		if [ -e /var/log/net/$INTERFACE ]; then
-			. /var/log/net/$INTERFACE
+		if [ -e /run/log/net/$INTERFACE ]; then
+			. /run/log/net/$INTERFACE
 		fi
 		if [ -n "$DHCP4_HOST_NAME" ] && [ -z "`pidof Xorg`" ]; then
 			CLIENT_NAME="$DHCP4_HOST_NAME"
@@ -46,8 +46,8 @@ if [ "$INTERFACE" != "lo" ]; then
 		echo "NET_DEVICE=$INTERFACE" >> $TS_RUNTIME
 	;;
 	down)
-		if [ -e /var/log/net/$INTERFACE ]; then
-			. /var/log/net/$INTERFACE
+		if [ -e /run/log/net/$INTERFACE ]; then
+			. /run/log/net/$INTERFACE
 		fi
 		NETWORKUP=FALSE
 	;;
@@ -56,17 +56,17 @@ if [ "$INTERFACE" != "lo" ]; then
 	;;
 	esac
 
-	mkdir -p /var/log/net
-	echo "DEVTYPE=\"$CONNECTION_ID\""		> /var/log/net/$INTERFACE
-	echo "CLIENT_NAME=$CLIENT_NAME"			>> /var/log/net/$INTERFACE
-	echo "CLIENT_MAC=$CLIENT_MAC"			>> /var/log/net/$INTERFACE
-	echo "CLIENT_IP=$ip"				>> /var/log/net/$INTERFACE
-	echo "CLIENT_GATEWAY=$gw"			>> /var/log/net/$INTERFACE
-	echo "SUBNET=$DHCP4_NETWORK_NUMBER"		>> /var/log/net/$INTERFACE
-	echo "SERVER_IP=$DHCP4_NEXT_SERVER"		>> /var/log/net/$INTERFACE
-	echo "NETWORKUP=$NETWORKUP"			>> /var/log/net/$INTERFACE
-	echo "NETMASK_SIZE=$DHCP4_SUBNET_MASK"		>> /var/log/net/$INTERFACE
-	echo "DHCP_SERVER_ID=$DHCP4_DHCP_SERVER_IDENTIFIER">> /var/log/net/$INTERFACE
-	echo "NET_USE=$NET_USE"				>> /var/log/net/$INTERFACE
-	echo "NET_DHCP_TIMEOUT=$NET_DHCP_TIMEOUT"	>> /var/log/net/$INTERFACE
+	mkdir -p /run/log/net
+	echo "DEVTYPE=\"$CONNECTION_ID\""		> /run/log/net/$INTERFACE
+	echo "CLIENT_NAME=$CLIENT_NAME"			>> /run/log/net/$INTERFACE
+	echo "CLIENT_MAC=$CLIENT_MAC"			>> /run/log/net/$INTERFACE
+	echo "CLIENT_IP=$ip"				>> /run/log/net/$INTERFACE
+	echo "CLIENT_GATEWAY=$gw"			>> /run/log/net/$INTERFACE
+	echo "SUBNET=$DHCP4_NETWORK_NUMBER"		>> /run/log/net/$INTERFACE
+	echo "SERVER_IP=$DHCP4_NEXT_SERVER"		>> /run/log/net/$INTERFACE
+	echo "NETWORKUP=$NETWORKUP"			>> /run/log/net/$INTERFACE
+	echo "NETMASK_SIZE=$DHCP4_SUBNET_MASK"		>> /run/log/net/$INTERFACE
+	echo "DHCP_SERVER_ID=$DHCP4_DHCP_SERVER_IDENTIFIER">> /run/log/net/$INTERFACE
+	echo "NET_USE=$NET_USE"				>> /run/log/net/$INTERFACE
+	echo "NET_DHCP_TIMEOUT=$NET_DHCP_TIMEOUT"	>> /run/log/net/$INTERFACE
 fi

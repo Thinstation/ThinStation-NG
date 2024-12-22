@@ -34,7 +34,7 @@ network_break()
 
 timeout=100
 while [ -z "$devicelist" ] && [ "$timeout" != "0" ]; do
-	devicelist=`grep -e NETWORKUP=TRUE /var/log/net/* |cut -d : -f1`
+	devicelist=`grep -e NETWORKUP=TRUE /run/log/net/* |cut -d : -f1`
 	sleep .1
 	let timeout-=1
 done

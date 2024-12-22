@@ -75,6 +75,7 @@ NET_REMOTE_ACCESS_FROM="0.0.0.0"
 #WIRELESS_DRIVER="wext"
 #TFTP_BLOCKSIZE=1024
 TFTP_BLOCKSIZE=8940
+#CRYPT_0="cryptdisk PARTLABEL=SafeStore none luks,discard"
 MOUNT_0="LABEL=boot     /boot		auto	X-mount.mkdir,defaults	0	0"
 MOUNT_1="LABEL=tsdev    /thinstation	auto	X-mount.mkdir,defaults	0	0"
 MOUNT_2="LABEL=prstnt	/var/prstnt	auto	X-mount.mkdir,defaults	0	0"

@@ -70,6 +70,12 @@ if [ "$2" == "true" ] ; then
 			ln -sf /fastboot/$lib lib64/$lib
 		fi
 	done
+	if [ -e lib64/fontconfig/conf.avail/57-dejavu-sans-fonts.conf ] && [ -e lib64/fonts/dejavu-sans-fonts/DejaVuSans-Bold.ttf ]; then
+		mkdir -p fastboot/fontconfig/conf.avail
+		mkdir -p fastboot/fonts/dejavu-sans-fonts
+		mv lib64/fontconfig/conf.avail/57-dejavu-sans-fonts.conf fastboot/fontconfig/conf.avail/.
+		mv lib64/fonts/dejavu-sans-fonts/DejaVuSans-Bold.ttf fastboot/fonts/dejavu-sans-fonts/.
+	fi
 	echo -e "\tMaking lib.squash"
 	timestamp="`date +%Y%m%d`0000"
 	for file in `find lib64`; do
@@ -151,11 +157,34 @@ if [ "$2" == "lotsofmem" ]; then
 			cp $libsource lib64/.
 		fi
 	done
-	for i in `ls --color=never lib64/ |grep -xvf ../fastboot/lib-boot |grep -xvf /tmp/fastlib |grep -Ev 'libgcc_s.so.[0-1]+|libnss_files.so.[0-9]+|libnss_dns.so.[0-9]+'` ; do
+	for i in `ls --color=never lib64/ |grep -xv fonts |grep -xv fontconfig |grep -xvf ../fastboot/lib-boot |grep -xvf /tmp/fastlib |grep -Ev 'libgcc_s.so.[0-1]+|libnss_files.so.[0-9]+|libnss_dns.so.[0-9]+'` ; do
 		if [ -n "$i" ] ; then
 			mv lib64/$i ../fastboot-tmp/lib64/.
 		fi
 	done
+	if [ -e lib64/fontconfig/conf.avail/57-dejavu-sans-fonts.conf ] && [ -e lib64/fonts/dejavu-sans-fonts/DejaVuSans-Bold.ttf ]; then
+	    mkdir -p ../fastboot-tmp/lib64/fonts/dejavu-sans-fonts
+	    mkdir -p ../fastboot-tmp/lib64/fontconfig/conf.avail
+
+	    # Move all font files except DejaVuSans-Bold.ttf
+	    for font_file in lib64/fonts/dejavu-sans-fonts/*; do
+	        if [[ "$font_file" != "lib64/fonts/dejavu-sans-fonts/DejaVuSans-Bold.ttf" ]]; then
+        	    mv "$font_file" ../fastboot-tmp/lib64/fonts/dejavu-sans-fonts/.
+	        fi
+	    done
+            for font in lib64/fonts/*; do
+                if [[ "$font" != "lib64/fonts/dejavu-sans-fonts" ]]; then
+                   mv "$font" ../fastboot-tmp/lib64/fonts/.
+                fi
+            done
+
+	    # Move all font config files except 57-dejavu-sans-fonts.conf
+	    for conf_file in lib64/fontconfig/conf.avail/*; do
+	        if [[ "$conf_file" != "lib64/fontconfig/conf.avail/57-dejavu-sans-fonts.conf" ]]; then
+	            mv "$conf_file" ../fastboot-tmp/lib64/fontconfig/conf.avail/.
+	        fi
+	    done
+        fi
 	if [ "$HARDLINK" == "true" ]; then
 		hardlink ../fastboot-tmp
 	fi

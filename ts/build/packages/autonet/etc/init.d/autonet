@@ -2,11 +2,11 @@
 . `dirname $0`/common
 
 timeout=50
-while [ -z "`ls -A /var/log/net |grep -v lo`" ] && [ "$timeout" != "0" ]; do
+while [ -z "`ls -A /run/log/net |grep -v lo`" ] && [ "$timeout" != "0" ]; do
 	sleep .1
 	let timeout-=1
 done
-for INTERFACE in `ls /var/log/net`; do
+for INTERFACE in `ls /run/log/net`; do
 	if [ -n "$INTERFACE" ]; then
 		export INTERFACE
 		/etc/udev/scripts/net.sh &

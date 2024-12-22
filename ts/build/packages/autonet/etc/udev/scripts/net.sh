@@ -14,8 +14,8 @@ valid_interface()
 
 last_config()
 {
-	if [ -e /var/log/net/$INTERFACE ]; then
-		. /var/log/net/$INTERFACE
+	if [ -e /run/log/net/$INTERFACE ]; then
+		. /run/log/net/$INTERFACE
 		echo_log "Read a config file for $INTERFACE"
 	fi
 }
@@ -94,12 +94,12 @@ client_name()
 
 log_interface()
 {
-	echo "DEVTYPE=$DEVTYPE" > /var/log/net/$INTERFACE
-	echo "CLIENT_NAME=$CLIENT_NAME" >> /var/log/net/$INTERFACE
-	echo "CLIENT_MAC=$CLIENT_MAC" >> /var/log/net/$INTERFACE
-	echo "NET_USE=$NET_USE" >> /var/log/net/$INTERFACE
-	echo "NET_DHCP_TIMEOUT=$NET_DHCP_TIMEOUT" >> /var/log/net/$INTERFACE
-	echo "CLIENT_IP=$NET_IP_ADDRESS" >> /var/log/net/$INTERFACE
+	echo "DEVTYPE=$DEVTYPE" > /run/log/net/$INTERFACE
+	echo "CLIENT_NAME=$CLIENT_NAME" >> /run/log/net/$INTERFACE
+	echo "CLIENT_MAC=$CLIENT_MAC" >> /run/log/net/$INTERFACE
+	echo "NET_USE=$NET_USE" >> /run/log/net/$INTERFACE
+	echo "NET_DHCP_TIMEOUT=$NET_DHCP_TIMEOUT" >> /run/log/net/$INTERFACE
+	echo "CLIENT_IP=$NET_IP_ADDRESS" >> /run/log/net/$INTERFACE
 }
 
 manual_config()
@@ -112,7 +112,7 @@ manual_config()
 	fi
 	if ifconfig $INTERFACE $NET_IP_ADDRESS netmask $NET_MASK ; then
 		NETWORKUP=TRUE
-		echo "NETWORKUP=TRUE" >> /var/log/net/$INTERFACE
+		echo "NETWORKUP=TRUE" >> /run/log/net/$INTERFACE
 		echo "NET${IFINDEX}=$INTERFACE" >> $TS_RUNTIME
 		route add default gw $NET_GATEWAY
 	fi
@@ -132,10 +132,10 @@ _lo()
 {
 	ifconfig lo 127.0.0.1
 	route add -net 127.0.0.0 netmask 255.0.0.0 dev lo
-	echo "DEVTYPE=lo" > /var/log/net/$INTERFACE
-	echo "CLIENT_NAME=localhost" >> /var/log/net/$INTERFACE
-	echo "CLIENT_IP=127.0.0.1" >> /var/log/net/$INTERFACE
-	echo "NETMASK=255.0.0.0" >>/var/log/net/$INTERFACE
+	echo "DEVTYPE=lo" > /run/log/net/$INTERFACE
+	echo "CLIENT_NAME=localhost" >> /run/log/net/$INTERFACE
+	echo "CLIENT_IP=127.0.0.1" >> /run/log/net/$INTERFACE
+	echo "NETMASK=255.0.0.0" >>/run/log/net/$INTERFACE
 	echo "NET${IFINDEX}=$INTERFACE" >> $TS_RUNTIME
 	exit
 }
@@ -155,7 +155,7 @@ _wlan()
 		exit
 	fi
 	if [ -n "$WIRELESS_WPAKEY" ];  then
-		echo "WIRELESS_WPAKEY=$WIRELESS_WPAKEY" >> /var/log/net/$INTERFACE
+		echo "WIRELESS_WPAKEY=$WIRELESS_WPAKEY" >> /run/log/net/$INTERFACE
 		wpa_passphrase "$WIRELESS_ESSID" "$WIRELESS_WPAKEY" >> /etc/wpa_supplicant.conf.tmp
 		awk '{print $0;if($0=="network={"){print "\teap=TTLS PEAP TLS"}}' < /etc/wpa_supplicant.conf.tmp > /etc/wpa_supplicant.conf.tmp2
 		awk '{print $0;if($0=="network={"){print "\tscan_ssid=1"}}' < /etc/wpa_supplicant.conf.tmp2 > /etc/wpa_supplicant.conf.tmp3
@@ -178,7 +178,7 @@ _wlan()
 		WIRELESS_NICKNAME=$CLIENT_NAME
 	fi
 	if [ -n "$WIRELESS_ESSID" -o -n "$WIRELESS_MODE" ] ; then
-		echo "WIRELESS_ESSID=$WIRELESS_ESSID" >> /var/log/net/$INTERFACE
+		echo "WIRELESS_ESSID=$WIRELESS_ESSID" >> /run/log/net/$INTERFACE
 		iwconfig $INTERFACE nick "$WIRELESS_NICKNAME" >/dev/null 2>&1
 	fi
 	# Regular stuff...
@@ -197,7 +197,7 @@ _wlan()
 		iwconfig $INTERFACE rate $WIRELESS_RATE
 	fi
 	if [ -n "$WIRELESS_KEY" ] && [ ! -n "$WIRELESS_WPAKEY" ] ; then
-		echo "WIRELESS_KEY=$WIRELESS_KEY" >> /var/log/net/$INTERFACE
+		echo "WIRELESS_KEY=$WIRELESS_KEY" >> /run/log/net/$INTERFACE
 		iwconfig $INTERFACE key $WIRELESS_KEY
 	fi
 	if [ -n "$WIRELESS_RTS" ] ; then

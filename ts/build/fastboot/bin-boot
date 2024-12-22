@@ -64,6 +64,9 @@ systemd-mount
 systemd-run
 systemd-tmpfiles
 systemd-sysusers
+systemd-cryptsetup
+systemd-ask-password
+systemd-tty-ask-password-agent
 tail
 tftp
 udevadm

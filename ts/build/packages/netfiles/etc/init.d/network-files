@@ -58,9 +58,9 @@ get_hosts_file()
 		cat /tmp/$HOSTFILE |sed "s/[[:blank:]][[:blank:]]*/ /g" | grep "^#" -v > $TS_HOSTS
 		rm /tmp/$HOSTFILE
 		rm /tmp/$HOSTFILE.tmp
-		for adapter in `ls /var/log/net`; do
+		for adapter in `ls /run/log/net`; do
 			unset NETWORKUP DEVTYPE CLIENT_NAME CLIENT_MAC CLIENT_IP SUBNET boot_file SERVER_IP NETMASK_SIZE SERVER_NAME
-			. /var/log/net/$adapter
+			. /run/log/net/$adapter
 			if is_enabled $NETWORKUP ; then
 				clientname=`cat $TS_HOSTS | grep -i $CLIENT_MAC | cut -d" " -f 1`
 				if [ -n "$clientname" ] ; then
@@ -178,7 +178,7 @@ get_config_files()
 if is_enabled $NET_FILE_ENABLED ; then
 	get_global_file
 	get_hosts_file
-	. /var/log/net/$NET_DEVICE
+	. /run/log/net/$NET_DEVICE
 	get_config_files
 	get_ssh_known_hosts
 fi
