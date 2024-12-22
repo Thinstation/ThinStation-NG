@@ -1,4 +1,4 @@
-#bfdd5419b945232658e210bcc7aafdf5  .dna
+#b0af51312175e011950dd36544dc8c68  .dna
 rm /ts/build/packages/base/bin/vmtouch
 rm /ts/build/packages/base/bin/ps
 rm /ts/build/packages/base/bin/getent
@@ -14,7 +14,6 @@ rm /ts/build/packages/base/etc/shells
 rm /ts/build/packages/base/etc/gcrypt/fips_enabled
 rm /ts/build/packages/base/etc/skel/.Xauthority
 rm /ts/build/packages/base/etc/environment
-rm /ts/build/packages/base/etc/login.defs
 rm /ts/build/packages/base/etc/inputrc
 rm /ts/build/packages/base/etc/pam_debug
 rm /ts/build/packages/base/sbin/ldconfig

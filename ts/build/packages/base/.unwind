@@ -1,4 +1,4 @@
-#bfdd5419b945232658e210bcc7aafdf5  .dna
+#b0af51312175e011950dd36544dc8c68  .dna
 
 mkdir -p /ts/build/packages/base/bin
 mkdir -p /ts/build/packages/base/etc
@@ -11,7 +11,6 @@ mkdir -p /ts/build/packages/base/sbin
 ln //etc/adjtime /ts/build/packages/base/etc/adjtime
 ln //etc/environment /ts/build/packages/base/etc/environment
 ln //etc/inputrc /ts/build/packages/base/etc/inputrc
-ln //etc/login.defs /ts/build/packages/base/etc/login.defs
 ln //etc/security/access.conf /ts/build/packages/base/etc/security/access.conf
 ln //etc/security/group.conf /ts/build/packages/base/etc/security/group.conf
 ln //etc/security/limits.conf /ts/build/packages/base/etc/security/limits.conf

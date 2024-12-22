@@ -1,15 +1,18 @@
 [Unit]
 Description=ThinStation Display Manager
 Requires=systemd-udev-settle.service
-After=tsinit.service
-After=systemd-user-sessions.service plymouth-quit-wait.service session-setup.service fastboot.service
+After=tsinit.target
+After=systemd-user-sessions.service session-setup.service fastboot.service
 After=rc-local.service
+After=rc-local.service plymouth-start.service systemd-user-sessions.service livesys-late.service systemd-hostnamed.service
+Before=plymouth-quit.service
+OnFailure=plymouth-quit.service
+
 
 [Service]
 # the VT is cleared by TTYVTDisallocate
-#ExecStartPre=/bin/used -pre
-#ExecStart=-strace -f -o /media/host0/debug /sbin/agetty -c --noclear --nohints --noissue --nohostname -a tsuser tty1 115200 linux
-ExecStart=-/sbin/agetty -c --noclear --nohints --noissue --nohostname -a tsuser tty1 115200 linux
+ExecStartPre=clear
+ExecStart=-/sbin/agetty -c --skip-login --nohints --noissue --nohostname -a tsuser tty1 115200 linux
 Type=idle
 Restart=always
 RestartSec=0
@@ -19,6 +22,8 @@ TTYReset=yes
 TTYVHangup=yes
 TTYVTDisallocate=yes
 KillMode=process
+StandardOutput=null
+StandardError=null
 IgnoreSIGPIPE=no
 SendSIGHUP=yes
 
