@@ -27,6 +27,7 @@ ThinStation itself has many contributors, with special thanks to:
 ThinStation now requires either:
 1. A **Fedora-based** host environment.
 2. The preconfigured **DevStation** Installer to set up the development environment.
+3. **WSL** and the minimal ThinStation root fs
 
 ### Using a Fedora Host
 
