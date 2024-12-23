@@ -1,6 +1,7 @@
 [Unit]
 Description=ThinStation Session Configure
 After=tsinit.target session.service
+Before=display-manager.service lightdm.service
 ConditionPathIsReadWrite=/etc
 
 [Service]
