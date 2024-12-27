@@ -136,6 +136,7 @@ package xfce4-pulseaudio-plugin # Systray volume icon
 
 package autonet              # Legacy automatic network configuration
 #package networkmanager       # Modern network management service
+#package sssd                 # LDAP/AD authentication for a multiuser system
 #package bluetooth            # Bluetooth support and applets
 #package wireless             # Wireless tools and drivers
 #package wpa_supplicant       # WPA/WPA2/802.1X supplicant for Wi-Fi

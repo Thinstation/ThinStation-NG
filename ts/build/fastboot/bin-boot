@@ -9,6 +9,8 @@ multipath
 multipathd
 nft
 chmod
+chown
+chgrp
 alsactl
 gzip
 login
@@ -42,6 +44,7 @@ iwpriv
 iwspy
 journalctl
 kmod
+ls
 lsmod
 lspci
 modprobe
