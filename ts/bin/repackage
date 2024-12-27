@@ -113,7 +113,7 @@ apply_caps() {
             fi
         fi
     done < $pkgpath/file_caps.txt
-	rm $pkgpath/file_caps.txt
+	rm -f $pkgpath/file_caps.txt
 }
 
 extract_archive()
