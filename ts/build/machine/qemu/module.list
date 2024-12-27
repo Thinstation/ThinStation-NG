@@ -35,3 +35,12 @@ module nfnetlink
 module bpf_preload
 module qemu_fw_cfg
 module virtio_console
+module snd_intel8x0
+module snd_ac97_codec
+module snd_pcm
+module snd_timer
+module virtio_net
+module net_failover
+module i2c_piix4
+module failover
+module i2c_smbus

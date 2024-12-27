@@ -54,7 +54,7 @@ monitor_files() {
     echo "Monitoring directories: ${DIR_LIST[*]}"
 
     # Monitor directories for changes (non-recursive)
-    inotifywait -m -e modify,create,delete "${DIR_LIST[@]}" | while read -r directory event filename; do
+    inotifywait -m -e modify,create,delete,moved_to,moved_from "${DIR_LIST[@]}" | while read -r directory event filename; do
         filepath="${directory}${filename}"
 
         # Check if the file is in the FILES array
@@ -66,7 +66,20 @@ monitor_files() {
                     ;;
                 CREATE|CREATE,ISDIR)
                     echo "Detected $event on $filepath. Creating and backing up..."
-                    touch "$filepath"
+                    #touch "$filepath"
+                    backup_file "$filepath"
+                    ;;
+                MOVED_FROM)
+                    local BACKUP_PATH="${BACKUP_DIR}${filepath}"
+                    if [ -e "$BACKUP_PATH" ]; then
+                        rm -rf "$BACKUP_PATH"
+                        echo "Backup deleted for $filepath"
+                    else
+                        echo "No backup exists for $filepath"
+                    fi
+                    ;;
+                MOVED_TO)
+                    echo "Detected $event on $filepath. Completing rename or move..."
                     backup_file "$filepath"
                     ;;
                 DELETE|DELETE,ISDIR)
@@ -89,14 +102,60 @@ monitor_files() {
     done
 }
 
+# Function to ensure the backup directory structure mimics the source with permissions and ownership
+ensure_backup_directory_structure() {
+    local source_path="$1"
+    local target_path="${BACKUP_DIR}${source_path}"
+
+    # Create the directory structure with the same permissions and ownership
+    if [ -d "$source_path" ]; then
+        mkdir -p "$target_path"
+        while [ "$source_path" != "." ] && [ "$source_path" != "/" ]; do
+            # Get permissions and ownership from the source directory
+            local perms=$(stat -c "%a" "$source_path")
+            local owner=$(stat -c "%U:%G" "$source_path")
+
+            # Create the corresponding directory in the backup directory if it doesn't exist
+            chmod "$perms" "${target_path}"
+            chown "$owner" "${target_path}"
+
+            source_path=$(dirname "$source_path")
+            target_path=$(dirname "$target_path")
+        done
+    fi
+}
+
+# Function to ensure the target directory structure mimics the source with permissions and ownership
+ensure_restore_directory_structure() {
+	local target_path="$1"
+    local source_path="${BACKUP_DIR}${target_path}"
+
+    # Create the directory structure with the same permissions and ownership
+    if [ -d "$source_path" ]; then
+        mkdir -p "$target_path"
+        while [ "$target_path" != "." ] && [ "$target_path" != "/" ]; do
+            # Get permissions and ownership from the source directory
+            local perms=$(stat -c "%a" "$source_path")
+            local owner=$(stat -c "%U:%G" "$source_path")
+
+            # Create the corresponding directory in the backup directory if it doesn't exist
+            chmod "$perms" "${target_path}"
+            chown "$owner" "${target_path}"
+
+            target_path=$(dirname "$target_path")
+            source_path=$(dirname "$source_path")
+        done
+    fi
+}
+
 backup_file() {
     local SOURCE_FILE="${1}"
 
     # Construct the backup destination path
     local BACKUP_FILE="${BACKUP_DIR}/${SOURCE_FILE}"
 
-    # Ensure the directory structure exists in the backup directory
-    mkdir -p "$(dirname "${BACKUP_FILE}")"
+    # Ensure that the directory structure exists and has the correct permissions
+    ensure_backup_directory_structure "$(dirname "$SOURCE_FILE")"
 
     # Check if the source and destination files differ
     if ! cmp -s "${SOURCE_FILE}" "${BACKUP_FILE}"; then
@@ -114,8 +173,9 @@ backup_files() {
 restore_files() {
     for FILE in "${FILES[@]}"; do
         local BACKUP_FILE="${BACKUP_DIR}/${FILE}"
-        # Ensure the directory structure exists in the target directory
-        mkdir -p "$(dirname "${FILE}")"
+        
+        # Ensure the directory structure exists and has the correct permissions
+        ensure_restore_directory_structure "$(dirname "$FILE")"
 
         if [ -f "${BACKUP_FILE}" ]; then
             # Restore file if we have a backup

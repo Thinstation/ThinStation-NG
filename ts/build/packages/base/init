@@ -16,6 +16,20 @@ if [ -e /proc/cmdline ]; then
 	clear
     fi
 fi
+# Input file where capabilities are stored
+CAP_FILE="/etc/filecaps"
+
+# Read each line in the CAP_FILE
+while IFS= read -r line; do
+    # Extract the file path and capability string using parameter expansion
+    file_path="${line% *}"  # Everything before the last space
+    caps="${line##* }"      # Everything after the last space
+
+    # Apply the capabilities to the file if the file exists
+    if [ -n "$caps" ] && [ -e "$file_path" ]; then
+        setcap "$caps" "$file_path"
+    fi
+done < "$CAP_FILE"
 
 # Hand over control to systemd
 exec /lib64/systemd/systemd

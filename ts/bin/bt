@@ -75,7 +75,8 @@ bridge()
 	net) echo "-netdev user,id=net0,tftp=$bootroot,bootfile=/boot/grub2/pxeboot.img -device virtio-net-pci,netdev=net0";;
 	net-efi) echo "-netdev user,id=net0,tftp=$bootroot,bootfile=/EFI/BOOT/BOOTX64.EFI -device virtio-net-pci,netdev=net0";;
 	*)	if [ -n "`ifconfig |grep -e br0`" ]; then
-			echo "-netdev bridge,id=br0,br=br0 -device virtio-net,netdev=br0"
+		#	echo "-netdev bridge,id=br0,br=br0 -device virtio-net,netdev=br0"
+			echo "-netdev bridge,id=n1 -device virtio-net,netdev=n1"
 		fi
 	;;
 	esac

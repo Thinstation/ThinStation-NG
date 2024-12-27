@@ -16,7 +16,7 @@ init)
 		debug="-d"
 	fi
 
-	mkdir $PKGDIR
+#	mkdir $PKGDIR
 	if [ "$PKG_PACKAGES_BG" != "        " ] ; then
 		echo_log '\n\nLoading extra packages (background)... ' $debug
 		# run the pkg load in background via setsid

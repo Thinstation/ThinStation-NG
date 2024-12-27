@@ -1,0 +1,13 @@
+[Unit]
+Description=Execute sssd.init script
+After=network-files.service tsinit.target
+ConditionPathExists=/etc/krb5.keytab
+
+[Service]
+Type=oneshot
+ExecStart=/etc/init.d/sssd.init
+RemainAfterExit=yes
+SyslogIdentifier=sssd.init
+
+[Install]
+WantedBy=tsinit.target

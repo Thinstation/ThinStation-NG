@@ -16,3 +16,4 @@ cups
 system-config-printer
 dnf
 #btrfs-progs
+persistent-files

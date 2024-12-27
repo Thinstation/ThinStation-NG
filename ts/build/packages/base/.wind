@@ -1,4 +1,4 @@
-#b0af51312175e011950dd36544dc8c68  .dna
+#eeac47dfe29952178d6e141349573ddc  .dna
 rm /ts/build/packages/base/bin/vmtouch
 rm /ts/build/packages/base/bin/ps
 rm /ts/build/packages/base/bin/getent
@@ -17,11 +17,14 @@ rm /ts/build/packages/base/etc/environment
 rm /ts/build/packages/base/etc/inputrc
 rm /ts/build/packages/base/etc/pam_debug
 rm /ts/build/packages/base/sbin/ldconfig
+rm /ts/build/packages/base/sbin/setcap
+rm /ts/build/packages/base/sbin/getcap
 rm /ts/build/packages/base/sbin/lspci
 rm /ts/build/packages/base/sbin/agetty
 rm /ts/build/packages/base/sbin/blkid
 rm /ts/build/packages/base/sbin/swapon
 rm /ts/build/packages/base/bin/login
+rm /ts/build/packages/base/lib64/security/pam_pwquality.so
 rm /ts/build/packages/base/lib64/security/pam_access.so
 rm /ts/build/packages/base/lib64/security/pam_deny.so
 rm /ts/build/packages/base/lib64/security/pam_env.so

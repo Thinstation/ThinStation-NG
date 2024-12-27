@@ -1,13 +1,17 @@
 #%PAM-1.0
-auth		required	pam_securetty.so
-auth		include		system-auth
-auth		sufficient	pam_succeed_if.so  user = root
--auth		optional	pam_gnome_keyring.so
-account		include		system-auth
-account         sufficient      pam_succeed_if.so  user = root
-password	include		system-auth
-password        sufficient      pam_succeed_if.so  user = root
-session		include		system-auth
-session		optional	pam_hooks.so /sbin/session $PAM_USER
--session	optional	pam_gnome_keyring.so	auto_start
--session	optional	pam_ck_connector.so nox11
+auth       substack     system-auth
+auth       include      postlogin
+account    required     pam_nologin.so
+account    include      system-auth
+password   include      system-auth
+# pam_selinux.so close should be the first session rule
+session    required     pam_selinux.so close
+session    required     pam_loginuid.so
+# pam_selinux.so open should only be followed by sessions to be executed in the user context
+session    required     pam_selinux.so open
+session    required     pam_namespace.so
+session    optional     pam_keyinit.so force revoke
+session    include      system-auth
+session    optional     pam_hooks.so /sbin/session $PAM_USER
+session    include      postlogin
+-session   optional     pam_ck_connector.so

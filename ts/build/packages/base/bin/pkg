@@ -51,7 +51,7 @@ load)
 		if [ -e /lib/modules/$2.ko ] ; then
 			cat /etc/$2.modules >> /etc/modules.mpkg
 			rm /etc/$2.modules
-			touch /var/packages/$2
+			touch /run/packages/$2
 		fi
 	fi
 ;;
@@ -63,7 +63,7 @@ forceload)
 ;;
 # Forces a re-init of a package
 forceinit)
-	rm /var/packages/$2 2> /dev/null
+	rm /run/packages/$2 2> /dev/null
 	shift 1
 	exec $0 init $@
 ;;

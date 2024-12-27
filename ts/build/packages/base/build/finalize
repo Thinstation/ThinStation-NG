@@ -57,13 +57,6 @@ if [ -e /etc/pam.d/login ]; then
         sed -i -e "s/user = root/user = $TSUSER/g" /etc/pam.d/login
 fi
 
-mkdir -p /var/log/applications
-chmod -R g+w,o+w /var/log/applications
-chmod -R o-r /var/log/applications
-chmod +t /var/log/applications
-
-chmod -R g+w,o+w /var/packages
-
 if [ "`readlink /bin/su`" == "/bin/busybox" ]; then
 	chmod u+s /bin/busybox
 else
@@ -158,8 +151,6 @@ ldconfig
 
 systemctl enable tsinit.target
 systemctl enable debug
-systemctl enable persistent-files
-systemctl enable persistent-dirs
 systemctl enable crond
 systemctl enable crontab
 systemctl enable rtc_cmos

@@ -25,3 +25,69 @@ fi
 
 systemctl enable systemd-resolved
 rm /lib64/systemd/system/sysinit.target.wants/systemd-update-done.service
+
+#hold()
+#{
+# Specify the alternate passwd and group files
+ALTERNATE_PASSWD="/build/passwd"
+ALTERNATE_GROUP="/build/group"
+
+# Function to check if a user ID has a valid username and fix it if not
+check_user() {
+    local user_id=$1
+    local file=$2
+    local username
+
+    # Check if user ID exists in the system's passwd file
+     if ! getent passwd "$1" &> /dev/null; then
+        # Try to get the username from the alternate passwd file
+        username=$(awk -F':' '$3 == '"$user_id"' {print $1}' "$ALTERNATE_PASSWD")
+        if [ -n "$username" ]; then
+#            echo "Correcting user ID $user_id to $username for file $file"
+            chown $username "$file"
+        else
+            echo "Invalid user ID $user_id for file $file"
+        fi
+    fi
+}
+
+# Function to check if a group ID has a valid group name and fix it if not
+check_group() {
+    local group_id=$1
+    local file=$2
+    local groupname
+
+    # Check if group ID exists in the system's group file
+     if ! getent group "$1" &> /dev/null; then
+        # Try to get the group name from the alternate group file
+        groupname=$(awk -F':' '$3 == '"$group_id"' {print $1}' "$ALTERNATE_GROUP")
+        if [ -n "$groupname" ]; then
+#            echo "Correcting group ID $group_id to $groupname for file $file"
+            # Save current capabilities to a variable
+            caps=$(getcap "$file" | cut -d' ' -f2)
+            chgrp $groupname "$file"
+            if [ -n "$caps" ]; then
+#                echo "Restoring capabilities '$caps' to file $file"
+                setcap "$caps" "$file"
+            fi
+        else
+            echo "Invalid group ID $group_id for file $file"
+        fi
+    fi
+}
+
+# Directory to scan, default is root if not specified
+directory="${1:-/}"
+echo "Correcting user and group ID's"
+# Use find to iterate over all files and directories starting from the root or a specified directory
+# Excludes the /proc and /sys directories to avoid runtime and pseudo filesystems
+find "$directory" \( -path /proc -o -path /sys -o -path /dev \) -prune -o -print0 | while IFS= read -r -d $'\0' file; do
+    # Fetch the user and group ID of the file
+    user_id=$(stat -c "%u" "$file")
+    group_id=$(stat -c "%g" "$file")
+
+    # Check the user and group ID for validity and correct if necessary
+    check_user "$user_id" "$file"
+    check_group "$group_id" "$file"
+done
+#}

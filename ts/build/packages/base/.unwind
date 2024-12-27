@@ -1,4 +1,4 @@
-#b0af51312175e011950dd36544dc8c68  .dna
+#eeac47dfe29952178d6e141349573ddc  .dna
 
 mkdir -p /ts/build/packages/base/bin
 mkdir -p /ts/build/packages/base/etc
@@ -37,6 +37,7 @@ ln //usr/lib64/security/pam_loginuid.so /ts/build/packages/base/lib64/security/p
 ln //usr/lib64/security/pam_namespace.so /ts/build/packages/base/lib64/security/pam_namespace.so
 ln //usr/lib64/security/pam_nologin.so /ts/build/packages/base/lib64/security/pam_nologin.so
 ln //usr/lib64/security/pam_permit.so /ts/build/packages/base/lib64/security/pam_permit.so
+ln //usr/lib64/security/pam_pwquality.so /ts/build/packages/base/lib64/security/pam_pwquality.so
 ln //usr/lib64/security/pam_rootok.so /ts/build/packages/base/lib64/security/pam_rootok.so
 ln //usr/lib64/security/pam_securetty.so /ts/build/packages/base/lib64/security/pam_securetty.so
 ln //usr/lib64/security/pam_selinux.so /ts/build/packages/base/lib64/security/pam_selinux.so
@@ -50,10 +51,12 @@ ln //usr/lib64/security/pam_wheel.so /ts/build/packages/base/lib64/security/pam_
 ln //usr/lib64/security/pam_xauth.so /ts/build/packages/base/lib64/security/pam_xauth.so
 ln //usr/sbin/agetty /ts/build/packages/base/sbin/agetty
 ln //usr/sbin/blkid /ts/build/packages/base/sbin/blkid
+ln //usr/sbin/getcap /ts/build/packages/base/sbin/getcap
 ln //usr/sbin/grpconv /ts/build/packages/base/sbin/grpconv
 ln //usr/sbin/ldconfig /ts/build/packages/base/sbin/ldconfig
 ln //usr/sbin/lspci /ts/build/packages/base/sbin/lspci
 ln //usr/sbin/pwconv /ts/build/packages/base/sbin/pwconv
+ln //usr/sbin/setcap /ts/build/packages/base/sbin/setcap
 ln //usr/sbin/swapon /ts/build/packages/base/sbin/swapon
 ln //usr/sbin/unix_chkpwd /ts/build/packages/base/sbin/unix_chkpwd
 touch /ts/build/packages/base/etc/gcrypt/fips_enabled

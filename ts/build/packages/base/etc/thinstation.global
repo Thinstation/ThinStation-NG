@@ -23,7 +23,7 @@ if [ -e $TS_RUNTIME ] ; then . $TS_RUNTIME ; fi
 if [ -e $TS_CUSTOM ] ; then . $TS_CUSTOM ; fi
 if [ -n "$NET_DEVICE" ] && [ -e /run/log/net/$NET_DEVICE ] ; then . /run/log/net/$NET_DEVICE ; fi
 
-if [ "$0" != "-sh" ]; then
+if [ "$0" != "-sh" ] && [ "$0" != "-bash" ]; then
 	PACKAGE=`basename $0 | cut -c 1`
 	if [ "$PACKAGE" = "S" ] ; then
 		PACKAGE=`basename $0 | cut -c 4-`

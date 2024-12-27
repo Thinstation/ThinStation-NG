@@ -1,3 +1,4 @@
+setcap
 usermod
 groupmod
 inotifywait

@@ -47,6 +47,7 @@ do_mounts()
 	if ! mounted proc ; then mount -t proc proc proc ; fi
 	if ! mounted sys ; then mount -t sysfs none sys ; fi
 	if ! mounted dev/pts ; then mount --bind /dev/pts dev/pts ; fi
+	if ! mounted run ; then mount --bind /run run ; fi
 	if [ -e fastboot ]; then
 		if [ -e ../boot-images/initrd/lib.squash ]; then
 			mount ../boot-images/initrd/lib.squash lib64
@@ -86,7 +87,7 @@ launch_chroot()
 
 do_unmounts()
 {
-	for mount in lib dev/pts dev proc sys run/pcscd run/user/0; do
+	for mount in lib dev/pts dev proc sys run/pcscd run/user/0 run; do
 		while mounted $mount ; do
 			umount $mount
 		done

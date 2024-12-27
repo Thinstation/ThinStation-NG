@@ -1,0 +1,3 @@
+#2de2f87d4bb00db84b4efc378a92deac  .dna
+rm /ts/build/packages/sssd/build/extra/bin/su
+

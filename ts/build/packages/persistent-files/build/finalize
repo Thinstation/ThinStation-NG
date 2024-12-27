@@ -1,0 +1,3 @@
+#persistent-files 90
+systemctl enable persistent-files
+systemctl enable persistent-dirs

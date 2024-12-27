@@ -1,0 +1,4 @@
+#2de2f87d4bb00db84b4efc378a92deac  .dna
+
+mkdir -p /ts/build/packages/sssd/build/extra/bin
+ln //usr/bin/su /ts/build/packages/sssd/build/extra/bin/su

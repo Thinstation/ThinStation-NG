@@ -108,14 +108,60 @@ monitor_dirs() {
     done
 }
 
+# Function to ensure the backup directory structure mimics the source with permissions and ownership
+ensure_backup_directory_structure() {
+    local source_path="$1"
+    local target_path="${BACKUP_DIR}${source_path}"
+
+    # Create the directory structure with the same permissions and ownership
+    if [ -d "$source_path" ]; then
+        mkdir -p "$target_path"
+        while [ "$source_path" != "." ] && [ "$source_path" != "/" ]; do
+            # Get permissions and ownership from the source directory
+            local perms=$(stat -c "%a" "$source_path")
+            local owner=$(stat -c "%U:%G" "$source_path")
+
+            # Create the corresponding directory in the backup directory if it doesn't exist
+            chmod "$perms" "${target_path}"
+            chown "$owner" "${target_path}"
+
+            source_path=$(dirname "$source_path")
+            target_path=$(dirname "$target_path")
+        done
+    fi
+}
+
+# Function to ensure the target directory structure mimics the source with permissions and ownership
+ensure_restore_directory_structure() {
+	local target_path="$1"
+    local source_path="${BACKUP_DIR}${target_path}"
+
+    # Create the directory structure with the same permissions and ownership
+    if [ -d "$source_path" ]; then
+        mkdir -p "$target_path"
+        while [ "$target_path" != "." ] && [ "$target_path" != "/" ]; do
+            # Get permissions and ownership from the backup directory
+            local perms=$(stat -c "%a" "$source_path")
+            local owner=$(stat -c "%U:%G" "$source_path")
+
+            # Create the corresponding directory in the root if it doesn't exist
+            chmod "$perms" "${target_path}"
+            chown "$owner" "${target_path}"
+
+            target_path=$(dirname "$target_path")
+            source_path=$(dirname "$source_path")
+        done
+    fi
+}
+
 backup_file() {
     local SOURCE_PATH="${1}"
 
     # Construct the backup destination path
     local BACKUP_PATH="${BACKUP_DIR}${SOURCE_PATH}"
 
-    # Ensure the directory structure exists in the backup directory
-    mkdir -p "$(dirname "${BACKUP_PATH}")"
+    # Ensure that the directory structure exists and has the correct permissions
+    ensure_backup_directory_structure "$(dirname "$SOURCE_PATH")"
 
     # Copy the file or directory if it exists
     if [ -d "${SOURCE_PATH}" ]; then
@@ -131,8 +177,8 @@ restore_dirs() {
         local BACKUP_PATH="${BACKUP_DIR}${DIR}"
 
         if [ -d "${BACKUP_PATH}" ]; then
-            # Ensure the directory structure exists in the target directory
-            mkdir -p "${DIR}"
+            # Ensure the directory structure exists and has the correct permissions
+            ensure_restore_directory_structure "$(dirname "$DIR")"
 
             # Restore directory or files from the backup using `cp -a`
             cp -a "${BACKUP_PATH}/." "${DIR}/"

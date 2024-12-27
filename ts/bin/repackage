@@ -103,6 +103,19 @@ extract_scripts()
         fi
 }
 
+apply_caps() {
+    while IFS= read -r line; do
+        if [[ "$line" =~ ^(.+?)\ (.+)$ ]]; then
+            file="${BASH_REMATCH[1]}"
+            caps="${BASH_REMATCH[2]}"
+            if [[ -n "$caps" && -e "$pkgpath/$file" ]] && [[ "$caps" != '(none)' ]]; then
+                setcap "$caps" "$pkgpath/$file"
+            fi
+        fi
+    done < $pkgpath/file_caps.txt
+	rm $pkgpath/file_caps.txt
+}
+
 extract_archive()
 {
 	local archive
@@ -145,8 +158,10 @@ extract_archive()
 	else
 		ppath=/build/wget_tmp
 	fi
+	rpm -qp --qf '[%{filenames} %{filecaps}\n]' $ppath/$archive.rpm > $pkgpath/file_caps.txt
 	rpm2cpio $ppath/$archive.rpm | cpio -idmv -D $pkgpath 2>/dev/null
 	extract_scripts "$ppath/$archive.rpm"
+	apply_caps
 	
 	rm -rf $pkgpath/usr/lib/.build-id $pkgpath/usr/lib64/.build-id
 	if [ -e $pkgpath/usr/lib ] && [ -z "$(ls -A $pkgpath/usr/lib)" ]; then
@@ -330,7 +345,7 @@ from_env()
 	temp_folder=./build-$PACKAGE
 	for package in $PORTS $RPM; do
 		main
-		cp -Prf $temp_folder/$package/* $INSTALLDIR/.
+		cp -a $temp_folder/$package/* $INSTALLDIR/.
 		rm -rf $temp_folder
 	done
 	cut_bloat

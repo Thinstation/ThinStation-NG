@@ -1,6 +1,5 @@
 ,devcmd,0,0,bin,0,,,,,,,,,
 ,dnsmasq_gui,0,0,bin,0,,,,,,,,,
-inotify-tools,inotifywait,0,0,bin,1,,,,,,,,,
 diffutils,diff,0,0,bin,1,,,,,,,,,
 findutils,find,0,0,bin,1,,,,,,,,,
 shadow-utils,chage,0,0,bin,1,,,,,,,,,

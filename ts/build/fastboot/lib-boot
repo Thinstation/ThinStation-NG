@@ -29,3 +29,8 @@ alsa-lib
 security
 polkit-1
 libnss_systemd.so.2
+libssh.so.4
+libldap.so.2
+liblber.so.2
+libevent-2.1.so.7
+libsasl2.so.3

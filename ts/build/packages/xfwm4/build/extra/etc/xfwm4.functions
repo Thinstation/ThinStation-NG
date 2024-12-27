@@ -451,6 +451,11 @@ wm_menu()
 		echo "Comment=$menu_dirtype"							>>$menudirfile
 	done
 		echo "</Menu>"									>>$menufile
+
+
+	rm -rf $IMENU
+        rm -rf /tmp/typelist
+
 }
 
 wm_workspaces()

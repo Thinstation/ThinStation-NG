@@ -183,7 +183,14 @@ mounted()
 lib_in_path()
 {
 	for lpath in `cat lpaths.tmp` $filepath; do
-		if [ -e ./tmp-tree$lpath/$1 ] || [ -e $pkgname$lpath/$1 ]; then
+		if [ -e ./tmp-tree$lpath/$1 ] \
+		|| [ -e $pkgname$lpath/$1 ] \
+		|| [ -e ./tmp-tree/lib64/*/$1 ] \
+		|| [ -e $pkgname/lib64/*/$1 ] \
+		|| [ -e ./tmp-tree/libexec/$1 ] \
+		|| [ -e ./tmp-tree/libexec/*/$1 ] \
+		|| [ -e $pkgname/libexec/$1 ] \
+		|| [ -e $pkgname/libexec/*/$1 ]; then
 			return 0
 		fi
 	done
@@ -501,8 +508,10 @@ make_initrd()
 	if [ "$ts_initrdcmd" == "squashfs" ]; then
 		mksquashfs . ../$INITDIR/initrd $ts_squashopt $DEF_SQAUSHOPT
 	elif [ "$ts_initrdcmd" == "none" -o "$ts_initrdcmd" == "" ]; then
+		get_cap
 		find . -print0 | cpio --null -oV --format=newc > ../$INITDIR/initrd
 	else
+		get_cap
 		find . -print0 | cpio --null -oV --format=newc | $ts_initrdcmd > ../$INITDIR/initrd
 	fi
 	cd ..
@@ -517,6 +526,21 @@ make_initrd()
            remove_files
            exit 1
    fi
+}
+
+get_cap()
+{
+# Specify the root directory of the filesystem to scan
+ROOT_DIR="."
+
+# Output file to store capabilities
+CAP_FILE="./etc/filecaps"
+
+# Make sure the output file is empty or does not exist
+> "$CAP_FILE"
+
+# Find all files and check for capabilities, then save them to the CAP_FILE
+find "$ROOT_DIR" -type f -exec getcap {} + | grep -v '^$' > "$CAP_FILE"
 }
 
 package_dependencies ()
@@ -831,7 +855,7 @@ do
 	   do
 	       if [ -e $filename/$packagename ] ; then
 		 echo "Coping extended $packagename to pkg file"
-	         cp -Rp $filename/$packagename/* $PKGDIR/$packagename
+	         cp -a $filename/$packagename/* $PKGDIR/$packagename
 	         rm -R $filename/$packagename
                fi
            done
@@ -840,7 +864,7 @@ do
 	   do
 	       if [ -e $filename/$packagename ] ; then
 		 echo "Coping extended $packagename to inbuilt image"
-	         cp -Rp $filename/$packagename/* ./tmp-tree
+	         cp -a $filename/$packagename/* ./tmp-tree
 	         rm -R $filename/$packagename
                fi
            done
@@ -924,7 +948,7 @@ do
     package)
 	echo "Package: $name"
 	if find_package $name ; then
-	   echo "cp -Rp --remove-destination $pkgpath/* ./tmp-tree > /dev/null 2>&1">>\
+	   echo "cp -a --remove-destination $pkgpath/* ./tmp-tree > /dev/null 2>&1">>\
 	     $PACDIR/$name.package
 	else
 	   echo "Not Found $name!!"
@@ -988,7 +1012,7 @@ do
     pkg)
         echo "building-pkg $name"
 	if find_package $name ; then
-	    echo -e "cp -Rp --remove-destination $pkgpath $PKGDIR" >> $PACDIR/$name.pkg
+	    echo -e "cp -a --remove-destination $pkgpath $PKGDIR" >> $PACDIR/$name.pkg
 	else
 	   echo "Not Found $name!!"
 	fi
@@ -1722,6 +1746,8 @@ filesystem_fixups()
 		mount --bind /proc ./tmp-tree/proc
 		sed -e "/if.*proc\/cmdline/d" tmp-tree/etc/thinstation.global > ./tmp-tree/build.finalize
 		cat ./tmp-tree/finalize/* >> ./tmp-tree/build.finalize
+		cp /etc/passwd ./tmp-tree/build/.
+		cp /etc/group ./tmp-tree/build/.
 		chroot ./tmp-tree /bin/bash /build.finalize
 		while fuser ./tmp-tree 2>&1 > /dev/null; do
 			sleep .1
