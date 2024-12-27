@@ -1,6 +1,7 @@
-#df20c4124c5e2c9f2f52d6ddc169d916  .dna
+#1b77a5054c7867cefbfad2554ce6a2bb  .dna
 
 mkdir -p /ts/build/packages/xorg7/bin
+mkdir -p /ts/build/packages/xorg7/etc/pam.d
 mkdir -p /ts/build/packages/xorg7/lib64
 mkdir -p /ts/build/packages/xorg7/lib64/xorg
 mkdir -p /ts/build/packages/xorg7/lib64/xorg/modules
@@ -8,6 +9,7 @@ mkdir -p /ts/build/packages/xorg7/lib64/xorg/modules/drivers
 mkdir -p /ts/build/packages/xorg7/lib64/xorg/modules/extensions
 mkdir -p /ts/build/packages/xorg7/lib64/xorg/modules/input
 mkdir -p /ts/build/packages/xorg7/libexec
+ln //etc/pam.d/xserver /ts/build/packages/xorg7/etc/pam.d/xserver
 ln //usr/bin/Xorg /ts/build/packages/xorg7/bin/Xorg
 ln //usr/bin/xinit /ts/build/packages/xorg7/bin/xinit
 ln //usr/bin/xrandr /ts/build/packages/xorg7/bin/xrandr

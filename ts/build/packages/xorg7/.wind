@@ -1,4 +1,4 @@
-#df20c4124c5e2c9f2f52d6ddc169d916  .dna
+#1b77a5054c7867cefbfad2554ce6a2bb  .dna
 rm /ts/build/packages/xorg7/bin/Xorg
 rm -f /ts/build/packages/xorg7/bin/X
 rm /ts/build/packages/xorg7/bin/xinit
@@ -14,6 +14,7 @@ rm /ts/build/packages/xorg7/lib64/xorg/modules/libfbdevhw.so
 rm /ts/build/packages/xorg7/lib64/xorg/modules/libshadow.so
 rm /ts/build/packages/xorg7/lib64/xorg/modules/libwfb.so
 rm /ts/build/packages/xorg7/lib64/xorg/modules/libvgahw.so
+rm /ts/build/packages/xorg7/etc/pam.d/xserver
 rm /ts/build/packages/xorg7/lib64/xorg/protocol.txt
 rm /ts/build/packages/xorg7/lib64/libGLX_mesa.so.0.0.0
 rm -f /ts/build/packages/xorg7/lib64/libGLX_mesa.so

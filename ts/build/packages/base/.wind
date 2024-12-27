@@ -1,8 +1,35 @@
-#eeac47dfe29952178d6e141349573ddc  .dna
+#d9c0baf623404128e08b8e4c3bb70252  .dna
 rm /ts/build/packages/base/bin/vmtouch
 rm /ts/build/packages/base/bin/ps
 rm /ts/build/packages/base/bin/getent
 rm /ts/build/packages/base/etc/adjtime
+rm /ts/build/packages/base/etc/authselect/nsswitch.conf
+rm /ts/build/packages/base/etc/authselect/password-auth
+rm -f /ts/build/packages/base/etc/pam.d/password-auth
+rm /ts/build/packages/base/etc/authselect/postlogin
+rm -f /ts/build/packages/base/etc/pam.d/postlogin
+rm /ts/build/packages/base/etc/authselect/system-auth
+rm -f /ts/build/packages/base/etc/pam.d/system-auth
+rm /ts/build/packages/base/etc/authselect/fingerprint-auth
+rm -f /ts/build/packages/base/etc/pam.d/fingerprint-auth
+rm /ts/build/packages/base/etc/authselect/smartcard-auth
+rm -f /ts/build/packages/base/etc/pam.d/smartcard-auth
+rm /ts/build/packages/base/etc/authselect/authselect.conf
+rm /ts/build/packages/base/etc/authselect/dconf-db
+rm /ts/build/packages/base/etc/authselect/dconf-locks
+rm /ts/build/packages/base/etc/pam.d/other
+rm /ts/build/packages/base/etc/pam.d/chfn
+rm /ts/build/packages/base/etc/pam.d/chsh
+rm /ts/build/packages/base/etc/pam.d/remote
+rm /ts/build/packages/base/etc/pam.d/runuser
+rm /ts/build/packages/base/etc/pam.d/runuser-l
+rm /ts/build/packages/base/etc/pam.d/su
+rm /ts/build/packages/base/etc/pam.d/su-l
+rm /ts/build/packages/base/etc/pam.d/login
+rm /ts/build/packages/base/etc/pam.d/config-util
+rm /ts/build/packages/base/etc/pam.d/passwd
+rm /ts/build/packages/base/etc/pam.d/vlock
+rm /ts/build/packages/base/etc/pam.d/ksu
 rm /ts/build/packages/base/etc/security/access.conf
 rm /ts/build/packages/base/etc/security/pam_env.conf
 rm /ts/build/packages/base/etc/security/group.conf
