@@ -1,4 +1,4 @@
-#d9c0baf623404128e08b8e4c3bb70252  .dna
+#f26a9899b70fe65f7b419ddb05f64395  .dna
 
 mkdir -p /ts/build/packages/base/bin
 mkdir -p /ts/build/packages/base/etc
@@ -41,6 +41,8 @@ ln //etc/security/limits.conf /ts/build/packages/base/etc/security/limits.conf
 ln //etc/security/namespace.conf /ts/build/packages/base/etc/security/namespace.conf
 ln //etc/security/namespace.init /ts/build/packages/base/etc/security/namespace.init
 ln //etc/security/pam_env.conf /ts/build/packages/base/etc/security/pam_env.conf
+ln //etc/security/pwquality.conf /ts/build/packages/base/etc/security/pwquality.conf
+ln //etc/security/sepermit.conf /ts/build/packages/base/etc/security/sepermit.conf
 ln //etc/security/time.conf /ts/build/packages/base/etc/security/time.conf
 ln //etc/shells /ts/build/packages/base/etc/shells
 ln //usr/bin/getent /ts/build/packages/base/bin/getent
@@ -65,6 +67,7 @@ ln //usr/lib64/security/pam_pwquality.so /ts/build/packages/base/lib64/security/
 ln //usr/lib64/security/pam_rootok.so /ts/build/packages/base/lib64/security/pam_rootok.so
 ln //usr/lib64/security/pam_securetty.so /ts/build/packages/base/lib64/security/pam_securetty.so
 ln //usr/lib64/security/pam_selinux.so /ts/build/packages/base/lib64/security/pam_selinux.so
+ln //usr/lib64/security/pam_sepermit.so /ts/build/packages/base/lib64/security/pam_sepermit.so
 ln //usr/lib64/security/pam_shells.so /ts/build/packages/base/lib64/security/pam_shells.so
 ln //usr/lib64/security/pam_succeed_if.so /ts/build/packages/base/lib64/security/pam_succeed_if.so
 ln //usr/lib64/security/pam_umask.so /ts/build/packages/base/lib64/security/pam_umask.so
@@ -88,6 +91,7 @@ ln -sf /etc/authselect/password-auth /ts/build/packages/base/etc/pam.d/password-
 ln -sf /etc/authselect/postlogin /ts/build/packages/base/etc/pam.d/postlogin
 ln -sf /etc/authselect/smartcard-auth /ts/build/packages/base/etc/pam.d/smartcard-auth
 ln -sf /etc/authselect/system-auth /ts/build/packages/base/etc/pam.d/system-auth
+ln -sf pam_sepermit.so /ts/build/packages/base/lib64/security/pam_selinux_permit.so
 touch /ts/build/packages/base/etc/gcrypt/fips_enabled
 touch /ts/build/packages/base/etc/pam_debug
 touch /ts/build/packages/base/etc/skel/.Xauthority

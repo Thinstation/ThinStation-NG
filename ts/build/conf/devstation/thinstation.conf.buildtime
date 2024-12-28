@@ -85,3 +85,4 @@ MOUNT_5="LABEL=log	/var/log	auto	X-mount.mkdir,defaults	0	0"
 MOUNT_6="LABEL=swap     swap		swap	defaults		0	0"
 USB_STORAGE_SYNC=on
 #DEBUGPAUSE=true
+SSSD_USER_GROUP="Domain Admins"

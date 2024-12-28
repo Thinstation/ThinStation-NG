@@ -1,7 +1,7 @@
 [Unit]
 Description=Mount shared folder between qemu host and guest
 ConditionVirtualization=kvm
-After=post-udev.service fastboot.service
+After=tsinit.target
 
 [Service]
 Type=oneshot
@@ -10,4 +10,4 @@ RemainAfterExit=yes
 
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=tsinit.target

@@ -1,2 +1,3 @@
 #ca-certificates 50
 update-ca-trust
+systemctl enable update-ca-trust.path

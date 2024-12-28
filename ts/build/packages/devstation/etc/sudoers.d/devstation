@@ -1,1 +1,1 @@
-%sudo ALL=(ALL) NOPASSWD: ALL
+%users ALL=(ALL) NOPASSWD: ALL

@@ -109,6 +109,7 @@ module cifs			# CIFS support (use either this or smbfs - not both)
 #package automount
 #package autonet
 package networkmanager
+package sssd
 package bluetooth
 #package udisks-glue
 package udisks

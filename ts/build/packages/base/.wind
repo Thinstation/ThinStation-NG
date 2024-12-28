@@ -1,4 +1,4 @@
-#d9c0baf623404128e08b8e4c3bb70252  .dna
+#f26a9899b70fe65f7b419ddb05f64395  .dna
 rm /ts/build/packages/base/bin/vmtouch
 rm /ts/build/packages/base/bin/ps
 rm /ts/build/packages/base/bin/getent
@@ -31,6 +31,8 @@ rm /ts/build/packages/base/etc/pam.d/passwd
 rm /ts/build/packages/base/etc/pam.d/vlock
 rm /ts/build/packages/base/etc/pam.d/ksu
 rm /ts/build/packages/base/etc/security/access.conf
+rm /ts/build/packages/base/etc/security/sepermit.conf
+rm /ts/build/packages/base/etc/security/pwquality.conf
 rm /ts/build/packages/base/etc/security/pam_env.conf
 rm /ts/build/packages/base/etc/security/group.conf
 rm /ts/build/packages/base/etc/security/limits.conf
@@ -52,6 +54,8 @@ rm /ts/build/packages/base/sbin/blkid
 rm /ts/build/packages/base/sbin/swapon
 rm /ts/build/packages/base/bin/login
 rm /ts/build/packages/base/lib64/security/pam_pwquality.so
+rm /ts/build/packages/base/lib64/security/pam_sepermit.so
+rm -f /ts/build/packages/base/lib64/security/pam_selinux_permit.so
 rm /ts/build/packages/base/lib64/security/pam_access.so
 rm /ts/build/packages/base/lib64/security/pam_deny.so
 rm /ts/build/packages/base/lib64/security/pam_env.so

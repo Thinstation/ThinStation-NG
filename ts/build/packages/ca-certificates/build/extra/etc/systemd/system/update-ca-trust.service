@@ -1,0 +1,6 @@
+[Unit]
+Description=Update CA Trust if files are present in anchors
+
+[Service]
+Type=oneshot
+ExecStart=/bin/update-ca-trust
