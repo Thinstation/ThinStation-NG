@@ -2,6 +2,9 @@
 systemd-sysusers
 systemd-tmpfiles --create
 
+dbus-uuidgen > /etc/machine-id
+chmod 0444 /etc/machine-id
+
 sed -i '/session[[:space:]]\+include[[:space:]]\+system-auth/a session    optional     pam_hooks.so /sbin/session $PAM_USER' /etc/pam.d/login
 
 for var in $(compgen -v | grep '^MOUNT_'); do
