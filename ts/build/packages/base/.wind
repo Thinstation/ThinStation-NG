@@ -1,4 +1,4 @@
-#f26a9899b70fe65f7b419ddb05f64395  .dna
+#9c1d1b4f294341968563bdffb904cf03  .dna
 rm /ts/build/packages/base/bin/vmtouch
 rm /ts/build/packages/base/bin/ps
 rm /ts/build/packages/base/bin/getent
@@ -84,4 +84,5 @@ rm /ts/build/packages/base/lib64/libgcc_s.so.1
 rm /ts/build/packages/base/sbin/pwconv
 rm /ts/build/packages/base/sbin/grpconv
 rm /ts/build/packages/base/sbin/unix_chkpwd
+rm /ts/build/packages/base/bin/mount
 

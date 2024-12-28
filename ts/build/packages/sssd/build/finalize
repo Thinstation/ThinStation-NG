@@ -21,4 +21,8 @@ systemctl enable sssd.init
 if [ -e /etc/lightdm/lightdm.conf ]; then
 	sed -i -e '/^autologin/d' /etc/lightdm/lightdm.conf
 	sed -i -e 's/^allow-user-switching=false/allow-user-switching=true/g' /etc/lightdm/lightdm.conf
+elif [ -e /etc/systemd/system/display-manager.service ]; then
+	sed -i -e 's/--skip-login //g' /etc/systemd/system/display-manager.service
+	sed -i -e "s/--noissue --nohostname -a $TSUSER //g" /etc/systemd/system/display-manager.service
 fi
+

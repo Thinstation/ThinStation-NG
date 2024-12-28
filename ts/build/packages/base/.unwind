@@ -1,4 +1,4 @@
-#f26a9899b70fe65f7b419ddb05f64395  .dna
+#9c1d1b4f294341968563bdffb904cf03  .dna
 
 mkdir -p /ts/build/packages/base/bin
 mkdir -p /ts/build/packages/base/etc
@@ -47,6 +47,7 @@ ln //etc/security/time.conf /ts/build/packages/base/etc/security/time.conf
 ln //etc/shells /ts/build/packages/base/etc/shells
 ln //usr/bin/getent /ts/build/packages/base/bin/getent
 ln //usr/bin/login /ts/build/packages/base/bin/login
+ln //usr/bin/mount /ts/build/packages/base/bin/mount
 ln //usr/bin/ps /ts/build/packages/base/bin/ps
 ln //usr/bin/vmtouch /ts/build/packages/base/bin/vmtouch
 ln //usr/lib64/ld-linux-x86-64.so.2 /ts/build/packages/base/lib64/ld-linux-x86-64.so.2
