@@ -16,8 +16,8 @@ systemctl enable systemd-resolved
 rm /lib64/systemd/system/sysinit.target.wants/systemd-update-done.service
 
 # Specify the alternate passwd and group files
-ALTERNATE_PASSWD="/build/passwd"
-ALTERNATE_GROUP="/build/group"
+export ALTERNATE_PASSWD="/build/passwd"
+export ALTERNATE_GROUP="/build/group"
 
 # Function to check if a user ID has a valid username and fix it if not
 check_user() {
@@ -37,6 +37,7 @@ check_user() {
         fi
     fi
 }
+export -f check_user
 
 # Function to check if a group ID has a valid group name and fix it if not
 check_group() {
@@ -62,20 +63,24 @@ check_group() {
         fi
     fi
 }
+export -f check_group
 
+num_procs=$(($(nproc) - 1))
+if [ "$num_procs" -lt 1 ]; then
+    num_procs=1
+fi
 # Directory to scan, default is root if not specified
-directory="${1:-/}"
 echo "Normalizing file/dir user and group ID's"
 # Use find to iterate over all files and directories starting from the root or a specified directory
-# Excludes the /proc and /sys directories to avoid runtime and pseudo filesystems
-find "$directory" \( -path /proc -o -path /sys -o -path /dev \) -prune -o -print0 | while IFS= read -r -d $'\0' file; do
-    # Fetch the user and group ID of the file
+# Excludes the /proc, /sys and /dev directories to avoid runtime and pseudo filesystems
+find / \( -path /proc -o -path /sys -o -path /dev \) -prune -o -print0 |
+xargs -0 -I {} -P $num_procs bash -c '
+    file="{}"
     user_id=$(stat -c "%u" "$file")
     group_id=$(stat -c "%g" "$file")
 
-    # Check the user and group ID for validity and correct if necessary
     check_user "$user_id" "$file"
     check_group "$group_id" "$file"
-done
+'
 
 /usr/lib/systemd/systemd-update-helper install-system-units systemd-udev{d,-settle,-trigger}.service systemd-udevd-{control,kernel}.socket systemd-homed.service systemd-oomd.service systemd-pstore.service
