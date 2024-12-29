@@ -65,7 +65,7 @@ check_group() {
 
 # Directory to scan, default is root if not specified
 directory="${1:-/}"
-echo "Correcting user and group ID's"
+echo "Normalizing file/dir user and group ID's"
 # Use find to iterate over all files and directories starting from the root or a specified directory
 # Excludes the /proc and /sys directories to avoid runtime and pseudo filesystems
 find "$directory" \( -path /proc -o -path /sys -o -path /dev \) -prune -o -print0 | while IFS= read -r -d $'\0' file; do
