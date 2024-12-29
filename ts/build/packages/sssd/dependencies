@@ -6,4 +6,3 @@ openldap
 openssl
 persistent-files
 ca-certificates
-gobject-introspection
