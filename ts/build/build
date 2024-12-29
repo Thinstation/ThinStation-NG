@@ -2046,6 +2046,7 @@ add_image()
 
 	sys_link hard $INITDIR/initrd $ESP/boot/initrd
 	sys_link hard $INITDIR/image.md5 $ESP/boot/image.md5
+	echo "machine_id=`dbus-uuidgen`" > $ESP/boot/machine-id
 	if is_enabled $ts_earlymicrocode; then
 		sys_link hard $INITDIR/ucode $ESP/boot/ucode
 	fi
