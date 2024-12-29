@@ -70,8 +70,8 @@ machine qemu                 # Default profile for QEMU virtual machines
 ###################################
 # File system modules for handling storage and mounting devices.
 
-#module ext4                  # Ext4 file system support
-#module vfat                  # FAT and VFAT file system support
+module ext4                  # Ext4 file system support
+module vfat                  # FAT and VFAT file system support
 module isofs                 # ISO9660 file system for CD-ROMs
 module udf                   # Universal Disk Format for CD/DVDs
 module fuse                  # Filesystem in Userspace
@@ -135,6 +135,7 @@ module fuse3                 # Updated FUSE version
 
 package autonet              # Legacy automatic network configuration
 #package networkmanager       # Modern network management service
+#package sssd                 # LDAP/AD authentication for a multiuser system
 #package bluetooth            # Bluetooth support and applets
 #package wireless             # Wireless tools and drivers
 #package wpa_supplicant       # WPA/WPA2/802.1X supplicant for Wi-Fi

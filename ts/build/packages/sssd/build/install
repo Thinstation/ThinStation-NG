@@ -23,8 +23,7 @@ sssd-proxy
 sssd-tools
 adcli
 oddjob
-oddjob-gpupdate
-oddjob-mkhomedir"
+oddjob-gpupdate"
 export DROP_FILES=""
 export DROP_DIRS="var/lib/gssproxy/default.sock"
 export CREATE_EMPTY_DIRS=""

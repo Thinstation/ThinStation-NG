@@ -21,3 +21,5 @@ TFTP_BLOCKSIZE=1024
 #BIND_MOUNT1="boot:/boot"
 #BIND_MOUNT2="tsdev:/thinstation"
 #USB_STORAGE_SYNC=on
+#MOUNT_0="LABEL=prstnt   /var/prstnt     auto    X-mount.mkdir,defaults  0       0"
+#SSSD_USER_GROUP="Domain Admins"

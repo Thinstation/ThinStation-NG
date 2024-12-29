@@ -1,6 +1,7 @@
 #systemd 30
 
 systemctl enable systemd-vconsole-setup-reload.service
+systemctl enable systemd-tmpfiles-reload.service
 
 if [ ! -e /etc/init.d/ntpconf ] && [ ! -e /etc/init.d/ntpdate ]; then
 	if [ -n "$NET_TIME_SERVER" ]; then
@@ -77,3 +78,5 @@ find "$directory" \( -path /proc -o -path /sys -o -path /dev \) -prune -o -print
     check_user "$user_id" "$file"
     check_group "$group_id" "$file"
 done
+
+/usr/lib/systemd/systemd-update-helper install-system-units systemd-udev{d,-settle,-trigger}.service systemd-udevd-{control,kernel}.socket systemd-homed.service systemd-oomd.service systemd-pstore.service

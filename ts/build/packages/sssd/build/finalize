@@ -26,3 +26,5 @@ elif [ -e /etc/systemd/system/display-manager.service ]; then
 	sed -i -e "s/--noissue --nohostname -a $TSUSER //g" /etc/systemd/system/display-manager.service
 fi
 
+# Don't enable mkhomedir module. We have our own routine for this.
+#sed -i -e '/pam_oddjob_mkhomedir.so/d' /lib64/authselect/default/*/*
