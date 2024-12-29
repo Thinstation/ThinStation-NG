@@ -1,7 +1,6 @@
 #systemd 30
 
 systemctl enable systemd-vconsole-setup-reload.service
-systemctl enable systemd-tmpfiles-reload.service
 
 if [ ! -e /etc/init.d/ntpconf ] && [ ! -e /etc/init.d/ntpdate ]; then
 	if [ -n "$NET_TIME_SERVER" ]; then
