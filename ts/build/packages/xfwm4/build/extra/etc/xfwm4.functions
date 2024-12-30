@@ -251,8 +251,20 @@ xfconf_settings()
 	if [ -e /sys/class/power_supply/BAT0 ]; then
 		xfconf-query -c xfce4-power-manager -p /xfce4-power-manager/show-tray-icon -t bool -s true -n
 	fi
-	if [ -e /bin/light-locker-command ]; then
-		xfconf-query -c xfce4-session -p /general/LockCommand -s "light-locker-command --lock" --create -t string
+#	if [ -e /bin/light-locker-command ]; then
+#		xfconf-query -c xfce4-session -p /general/LockCommand -s "light-locker-command --lock" --create -t string
+#	fi
+	if which xfce4-screensaver >/dev/null; then
+		if [ "`readlink /etc/systemd/system/display-manager.service`" == "/usr/local/lib/systemd/system/lightdm.service" ]; then
+			if ! grep -q /etc/lightdm/lightdm.conf -e '^autologin'; then
+				# Enable the lock screen
+				xfconf-query -c xfce4-screensaver -p /lock/enabled -s true
+				xfconf-query -c xfce4-session -p /general/LockCommand -s "xfce4-screensaver-command --lock" --create -t string
+
+				# Enable user switching
+				xfconf-query -c xfce4-screensaver -p /lock/user-switching/enabled -s true
+			fi
+		fi
 	fi
 }
 

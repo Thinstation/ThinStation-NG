@@ -11,6 +11,11 @@ fi
 #xrandr
 cd /
 #if [ -n "$1" ]; then
+#	if [ "$1" == "startxfce4" ]; then
+#		. /etc/thinstation.functions
+#		. /etc/xfwm4.functions
+#		wm_menu
+#	fi
 #	exec $1
 #elif [ -e $WKDIR/windowapps ] ; then
        	exec $WKDIR/windowapps

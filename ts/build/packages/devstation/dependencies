@@ -7,7 +7,7 @@ lighttpd
 pavucontrol
 ghostscript
 lightdm
-light-locker
+#light-locker
 lvm2
 geany
 freerdp
@@ -17,3 +17,4 @@ system-config-printer
 dnf
 #btrfs-progs
 persistent-files
+xfce4-screensaver

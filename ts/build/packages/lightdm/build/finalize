@@ -7,3 +7,15 @@ mkdir -p /var/lib/lightdm/.cache/lightdm-gtk-greeter
 chown -R lightdm:lightdm /var/lib/lightdm
 
 sed -i -e "s/tsuser/$TSUSER/g" /etc/lightdm/lightdm.conf
+
+LDM_CONF=/etc/lightdm/lightdm-gtk-greeter.conf
+
+echo "theme-name = Adwaita"			>> $LDM_CONF
+if is_enabled $LIGHTDM_BANNER; then
+	cp /build/banner.png /etc/banner.png
+	sed -i -e '/^background/d'		$LDM_CONF
+	echo "background=/etc/banner.png"	>> $LDM_CONF
+	echo "position = 50%,center 70%,center" >> $LDM_CONF
+	echo "screensaver-timeout = 5"		>> $LDM_CONF
+	echo "user-background = false"		>> $LDM_CONF
+fi
