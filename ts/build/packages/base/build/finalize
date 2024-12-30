@@ -111,7 +111,7 @@ ThinStation release $TSVER $CODENAME
 EOF
 
 	if [ ! -e /etc/issue ]; then
-cat <<'EOF'> /etc/issue
+		cat <<'EOF'> /etc/issue
 \S
 Kernel \r on an \m (\l)
 EOF

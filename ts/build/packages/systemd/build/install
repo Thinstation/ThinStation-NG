@@ -9,7 +9,8 @@ export DROP_FILES="	etc.conf \
 			shutdown \
 			ldconfig.service \
 			installkernel \
-			kernel-install"
+			kernel-install
+			issue"
 
 export DROP_DIRS="	etc/kernel \
 			lib64/dnf5 \
