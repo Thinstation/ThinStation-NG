@@ -1,6 +1,7 @@
 [Unit]
 Description=Execute sssd.init script
 After=network-files.service tsinit.target
+Before=display-manager.service lightdm.service
 ConditionPathExists=/etc/krb5.keytab
 
 [Service]
