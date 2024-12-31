@@ -236,72 +236,78 @@ EOF
     echo "Finished appending wireless connection configuration..."
 }
 
+case $1 in
+	init)
+	# Source TS variables
+	. `dirname $0`/common
 
-# Source TS variables
-. `dirname $0`/common
+	# exit if anything fails......random breakage
+	#set -e
 
-# exit if anything fails......random breakage
-#set -e
+	#set -x
+	#exec </dev/null >/var/log/networkmanager.log 2>&1
 
-#set -x
-#exec </dev/null >/var/log/networkmanager.log 2>&1
+	## MAIN
+	# system-connections directory path
+	SCDIR="/etc/NetworkManager/system-connections"
 
-## MAIN
-# system-connections directory path
-SCDIR="/etc/NetworkManager/system-connections"
+	# Assume that if not specified, an interface will auto-configure
+	# We do this here to avoid creating a system-configuration file
+	# if both modes are not specified in thinstation.conf (i.e.
+	# default NetworkManager behavior)
+	: ${NET_IPV4_MODE:="auto"}
+	: ${NET_IPV6_MODE:="auto"}
+	: ${NET_USE:="BOTH"}
 
-# Assume that if not specified, an interface will auto-configure
-# We do this here to avoid creating a system-configuration file
-# if both modes are not specified in thinstation.conf (i.e.
-# default NetworkManager behavior)
-: ${NET_IPV4_MODE:="auto"}
-: ${NET_IPV6_MODE:="auto"}
-: ${NET_USE:="BOTH"}
+	# Correct a likely data entry mistake
+	[ "$NET_IPV4_MODE" == "disable" ] && NET_IPV4_MODE="disabled"
+	[ "$NET_IPV6_MODE" == "disable" ] && NET_IPV6_MODE="disabled"
 
-# Correct a likely data entry mistake
-[ "$NET_IPV4_MODE" == "disable" ] && NET_IPV4_MODE="disabled"
-[ "$NET_IPV6_MODE" == "disable" ] && NET_IPV6_MODE="disabled"
+	if [ "$NET_USE" == "LAN" ] || [ "$NET_USE" == "BOTH" ]; then
+		create_ethernet_system_connection
+	fi
 
-if [ "$NET_USE" == "LAN" ] || [ "$NET_USE" == "BOTH" ]; then
-	create_ethernet_system_connection
-fi
+	#Wireless
+	if [ "$NET_USE" == "WLAN" ] || [ "$NET_USE" == "BOTH" ]; then
+		create_wireless_system_connection
+	fi
 
-#Wireless
-if [ "$NET_USE" == "WLAN" ] || [ "$NET_USE" == "BOTH" ]; then
-	create_wireless_system_connection
-fi
+	echo "Finished creating system connections for NetworkManager."
+	;;
+esac
 
-echo "Finished creating system connections for NetworkManager."
-
-#if [ "$HOSTNAME" == "localhost.localdomain" ] || [ "$HOSTNAME" == "localhost" ]; then
-if ! pidof Xorg; then
-	counter=0
-	while [ -z "$FIRST_ETH" ] && [ "$counter" != "100" ]; do
-		FIRST_ETH=$(ls /sys/class/net | grep -m 1 'e')
-		let counter+=1
-		sleep .1
-	done
-	if [ -n "$FIRST_ETH" ]; then
-		CLIENT_MAC=`cat /sys/class/net/$FIRST_ETH/address | sed 's/://g'`
-		if [ -n "`echo \"$NET_HOSTNAME\" | sed -n '/\*/p'`" ]; then
-			CLIENT_NAME=`echo "$NET_HOSTNAME" | sed "s/\*/$CLIENT_MAC/"`
-		else
-			CLIENT_NAME=$NET_HOSTNAME
-		fi
-		if [ -e /etc/thinstation.hosts ] ; then
-			clientname=`cat /etc/thinstation.hosts | grep -i $CLIENT_MAC | cut -d" " -f 1`
-			if [ -n "$clientname" ] ; then
-				CLIENT_NAME=$clientname
+case $1 in
+	init|reconfigure)
+	if ! pidof Xorg; then
+		counter=0
+		while [ -z "$FIRST_ETH" ] && [ "$counter" != "100" ]; do
+			FIRST_ETH=$(ls /sys/class/net | grep -m 1 'e')
+			let counter+=1
+			sleep .1
+		done
+		if [ -n "$FIRST_ETH" ]; then
+			CLIENT_MAC=`cat /sys/class/net/$FIRST_ETH/address | sed 's/://g'`
+			if [ -n "`echo \"$NET_HOSTNAME\" | sed -n '/\*/p'`" ]; then
+				CLIENT_NAME=`echo "$NET_HOSTNAME" | sed "s/\*/$CLIENT_MAC/"`
+			else
+				CLIENT_NAME=$NET_HOSTNAME
 			fi
-		fi
-		if [ "$CLIENT_NAME" == "(none)" ]; then
-			unset CLIENT_NAME
-		else
-			hostnamectl set-hostname $CLIENT_NAME
-			if [ -e /etc/hosts ]; then
-				sed -i '/localhost/d' /etc/hosts
+			if [ -e /etc/thinstation.hosts ] ; then
+				clientname=`cat /etc/thinstation.hosts | grep -i $CLIENT_MAC | cut -d" " -f 1`
+				if [ -n "$clientname" ] ; then
+					CLIENT_NAME=$clientname
+				fi
 			fi
-			echo "127.0.0.1 `hostname` localhost" >> /etc/hosts
+			if [ "$CLIENT_NAME" == "(none)" ]; then
+				unset CLIENT_NAME
+			else
+				hostnamectl set-hostname $CLIENT_NAME
+				if [ -e /etc/hosts ]; then
+					sed -i '/localhost/d' /etc/hosts
+				fi
+				echo "127.0.0.1 `hostname` localhost" >> /etc/hosts
+			fi
 		fi
 	fi
-fi
+	;;
+esac

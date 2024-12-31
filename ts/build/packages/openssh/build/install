@@ -1,7 +1,7 @@
 #!/bin/sh
 
 export PACKAGE=openssh
-export PORTS="openssh openssh-server"
+export PORTS="openssh-server"
 export DROP_DIRS="etc/init.d etc/rc.d"
 repackage -e
 

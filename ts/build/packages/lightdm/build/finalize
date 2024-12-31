@@ -16,6 +16,6 @@ if is_enabled $LIGHTDM_BANNER; then
 	sed -i -e '/^background/d'		$LDM_CONF
 	echo "background=/etc/banner.svg"	>> $LDM_CONF
 	echo "position = 50%,center 70%,center" >> $LDM_CONF
-	echo "screensaver-timeout = 5"		>> $LDM_CONF
+	echo "screensaver-timeout = 60"		>> $LDM_CONF
 	echo "user-background = false"		>> $LDM_CONF
 fi

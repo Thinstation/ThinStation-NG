@@ -1,6 +1,7 @@
 [Unit]
 Description=Mount Fastboot Data
 After=network-online.target
+Wants=network-online.target
 Before=tsinit.target display-manager.service
 
 [Service]

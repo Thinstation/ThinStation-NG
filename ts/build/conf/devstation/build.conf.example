@@ -176,7 +176,7 @@ package locale-tr_TR  # Turkish
 #package xnest			# XDM in a window client
 #package urxvt            	# Light Xterm Client (vt102)
 #package xterm           	# Xterm Client (vt220)
-package ssh			# Secure Shell client
+#package ssh			# Secure Shell client
 #package tn5250          	# 5250 terminal emulator
 #package dillo			# Dillo light web browser
 #package thinlinc		# Cendio ThinLinc client support
@@ -213,7 +213,8 @@ package thunar			# File Manager for xfwm4 -- Pulls in xfwm4
 #package www 			# Web access to client.  From a browser: "http://<IP number>"
                         	#  The standard page is for general user settings, administrative access
                         	#  is on port 6800.
-package sshd			# Dropbear secure shell server
+#package sshd			# Dropbear secure shell server
+package openssh                 # openssh secure shell server
 #package tftpd 			# Built in tftpd server. Useful for making a tftpserver
 				#  for thinstation on a WAN over a slow link.
 package cups

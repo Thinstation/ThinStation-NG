@@ -2,6 +2,7 @@
 Description=Restart NetworkManager After Clearing State
 After=tsinit.target profile-setup.service net.profile-setup.service
 Before=sssd.init.service display-manager.service lightdm.service
+ConditionPathExistsGlob=/etc/NetworkManager/system-connections/*
 
 [Service]
 Type=oneshot
