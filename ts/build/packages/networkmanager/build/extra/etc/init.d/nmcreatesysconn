@@ -236,16 +236,17 @@ EOF
     echo "Finished appending wireless connection configuration..."
 }
 
+# Source TS variables
+. `dirname $0`/common
+
+# exit if anything fails......random breakage
+#set -e
+
+#set -x
+#exec </dev/null >/var/log/networkmanager.log 2>&1
+
 case $1 in
 	init)
-	# Source TS variables
-	. `dirname $0`/common
-
-	# exit if anything fails......random breakage
-	#set -e
-
-	#set -x
-	#exec </dev/null >/var/log/networkmanager.log 2>&1
 
 	## MAIN
 	# system-connections directory path
