@@ -66,14 +66,13 @@ monitor_files() {
 					;;
 				CREATE|CREATE,ISDIR)
 					echo "Detected $event on $filepath. Creating and backing up..."
-					#touch "$filepath"
 					backup_file "$filepath"
 					;;
 				MOVED_FROM)
+					echo "Detected $event on $filepath. Deleting backup..."
 					local BACKUP_PATH="${BACKUP_DIR}${filepath}"
 					if [ -e "$BACKUP_PATH" ]; then
 						rm -rf "$BACKUP_PATH"
-						echo "Backup deleted for $filepath"
 					else
 						echo "No backup exists for $filepath"
 					fi
@@ -87,7 +86,6 @@ monitor_files() {
 					local BACKUP_FILE="${BACKUP_DIR}/${filepath}"
 					if [ -f "$BACKUP_FILE" ]; then
 						rm -f "$BACKUP_FILE"
-						echo "Backup deleted for $filepath"
 					else
 						echo "No backup exists for $filepath"
 					fi
