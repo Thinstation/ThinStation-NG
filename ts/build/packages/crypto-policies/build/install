@@ -2,11 +2,21 @@
 
 export PACKAGE="crypto-policies"
 export PORTS="crypto-policies"
-export DROP_FILES=""
-export DROP_DIRS=""
+export DROP_FILES="default-config default-fips-config reload-cmds.sh"
+export DROP_DIRS="libexec lib64/systemd lib64/crypto-policies/back-ends lib64/crypto-policies/policies lib64/crypto-policies/EMPTY lib64/crypto-policies/FUTURE lib64/crypto-policies/LEGACY etc/crypto-policies/back-ends etc/crypto-policies/local.d etc/crypto-policies/policies etc/crypto-policies/state"
 export CREATE_EMPTY_DIRS=""
 repackage -e
 
 returnval=$?
+
+for policy in DEFAULT FIPS; do
+        mkdir -p /build/packages/crypto-policies/etc/crypto-policies/$policy
+        update-crypto-policies --set $policy >/dev/null 2>&1
+        mv /etc/crypto-policies/* /build/packages/crypto-policies/etc/crypto-policies/$policy/.
+done
+
+update-crypto-policies --set DEFAULT >/dev/null
+
+
 
 exit $returnval
