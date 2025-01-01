@@ -3,6 +3,7 @@
 if [ -e /FIPS ]; then
         cp -a /etc/crypto-policies/FIPS/* /etc/crypto-policies/.
         rm -rf /FIPS
+	systemctl enable fips-crypto-policy-overlay
 else
         cp -a /etc/crypto-policies/DEFAULT/* /etc/crypto-policies/.
 fi

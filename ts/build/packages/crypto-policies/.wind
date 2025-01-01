@@ -1,2 +1,15 @@
-#d41d8cd98f00b204e9800998ecf8427e  .dna
+#3b06d7476f7465d8175815a9a576220b  .dna
+rm /ts/build/packages/crypto-policies/build/extra/lib64/fipscheck/libcrypt.so.2.0.0.hmac
+rm -f /ts/build/packages/crypto-policies/build/extra/lib64/fipscheck/libcrypt.so.2.hmac
+rm /ts/build/packages/crypto-policies/build/extra/lib64/hmaccalc/libkcapi.so.1.5.0.hmac
+rm -f /ts/build/packages/crypto-policies/build/extra/lib64/hmaccalc/libkcapi.so.1.hmac
+rm /ts/build/packages/crypto-policies/build/extra/lib64/hmaccalc/kcapi-hasher.hmac
+rm /ts/build/packages/crypto-policies/build/extra/lib64/.libgmp.so.10.5.0.hmac
+rm -f /ts/build/packages/crypto-policies/build/extra/lib64/.libgmp.so.10.hmac
+rm /ts/build/packages/crypto-policies/build/extra/lib64/.libhogweed.so.6.9.hmac
+rm -f /ts/build/packages/crypto-policies/build/extra/lib64/.libhogweed.so.6.hmac
+rm /ts/build/packages/crypto-policies/build/extra/lib64/.libnettle.so.8.9.hmac
+rm -f /ts/build/packages/crypto-policies/build/extra/lib64/.libnettle.so.8.hmac
+rm /ts/build/packages/crypto-policies/build/extra/lib64/.libgnutls.so.30.40.0.hmac
+rm -f /ts/build/packages/crypto-policies/build/extra/lib64/.libgnutls.so.30.hmac
 
