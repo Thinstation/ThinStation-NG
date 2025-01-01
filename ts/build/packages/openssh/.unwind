@@ -1,2 +1,4 @@
-#d41d8cd98f00b204e9800998ecf8427e  .dna
+#307bf0853fe87c1ccfea4326117bdb33  .dna
 
+mkdir -p /ts/build/packages/openssh/build/extra/lib64/security
+ln //usr/lib64/security/pam_motd.so /ts/build/packages/openssh/build/extra/lib64/security/pam_motd.so
