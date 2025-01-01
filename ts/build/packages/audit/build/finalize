@@ -1,0 +1,15 @@
+#audit 80
+/usr/lib/systemd/systemd-update-helper install-system-units audit-rules.service || : 
+
+# Copy default rules into place on new installation
+files=`ls /etc/audit/rules.d/ 2>/dev/null | wc -w`
+if [ "$files" -eq 0 ] ; then
+    echo "No rules detected, adding default"
+    # FESCO asked for audit to be off by default. #1117953
+    if [ -e /usr/share/audit-rules/10-no-audit.rules ] ; then
+        install -m 0640 -o 0 -g 0 -p /usr/share/audit-rules/10-no-audit.rules /etc/audit/rules.d/audit.rules
+    else
+        install -m 0640 -o 0 -g 0 /dev/null /etc/audit/rules.d/audit.rules
+    fi
+fi
+/usr/lib/systemd/systemd-update-helper install-system-units auditd.service

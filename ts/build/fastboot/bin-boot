@@ -1,3 +1,6 @@
+auditd
+auditctl
+augenrules
 setcap
 usermod
 groupmod

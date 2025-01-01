@@ -1,0 +1,8 @@
+/var/log/wpa_supplicant.log {
+    missingok
+    notifempty
+    compress
+    delaycompress
+    size 30k
+    create 0600 root root
+}
