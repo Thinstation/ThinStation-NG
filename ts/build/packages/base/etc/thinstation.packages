@@ -45,11 +45,6 @@ if [ -z "$CMD_WINDOW" ]		; then     CMD_WINDOW=$CMD_GLOBAL	; fi
 if [ -z "$CMD_MENU" ]		; then       CMD_MENU=$CMD_GLOBAL	; fi
 if [ -z "$CMD_FULLSCREEN" ]	; then CMD_FULLSCREEN=$CMD_GLOBAL	; fi
 
-
-
-APPLOG=$APPLOGDIR/$PACKAGE.$$
-export APPLOG
-
 gen_menu()
 {
 	if [ -e /etc/cmd/$PACKAGE.wm ] && [ -e /etc/$PACKAGE.functions ] && x_wm; then

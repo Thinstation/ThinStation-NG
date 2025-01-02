@@ -32,4 +32,15 @@ if [ "$0" != "-sh" ] && [ "$0" != "-bash" ]; then
 	fi
 fi
 
+UID=`id -u`
+GID=`id -g`
+APPLOGDIR=/run/user/$UID/applications
+APPLOG=$APPLOGDIR/$PACKAGE.$$
+export APPLOGDIR APPLOG
+if [ ! -e $APPLOGDIR ]; then
+        mkdir -p $APPLOGDIR
+        chown $UID:$GID $APPLOGDIR
+        chmod 2700 $APPLOGDIR
+fi
+
 for i in `cat $TS_EXPORTS` ; do	export $i ; done
