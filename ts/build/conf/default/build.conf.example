@@ -92,9 +92,10 @@ module fuse3                 # Updated FUSE version
 ####################################
 ### --- ThinStation Packages --- ###
 ####################################
-#package automount          # Automatically mount storage volumes during boot
-#package netfiles           # Package that downloads additional runtime config files during boot.
-#package idle-shutdown		# Package that lets you specify automatic shutdown settings and logic.
+#package automount            # Automatically mount storage volumes during boot
+#package netfiles             # Package that downloads additional runtime config files during boot
+#package persisten-files      # Scripts that will backup and restore files that need to persist
+#package idle-shutdown        # Package that lets you specify automatic shutdown settings and logic
 
 #####################
 ### --- Sound --- ###
@@ -221,7 +222,8 @@ package locale-en_US         # English (US)
 #package lighttpd             # Lightweight web server
 #package tftpd                # TFTP server for PXE booting
 #package dnsmasq              # DNS and DHCP server
-#package sshd                 # Secure shell server for remote login
+#package sshd                 # Secure shell server for remote login using dropbear
+#package openssh              # Secure shell server for remote login using openssh
 
 ####################
 ### --- Xorg --- ###
@@ -246,6 +248,7 @@ package xorg7-vmware         # VMware GPU drivers
 
 package xfwm4                # XFCE window manager
 #package xfce4-power-manager  # Power management for XFCE
+#package xfce4-screensaver    # Session locker for xfce4
 
 # Display Manager
 #package lightdm              # Lightweight display manager
