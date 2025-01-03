@@ -1,5 +1,8 @@
 #!/bin/bash
 
+USER_TOKEN="useruser"
+ADMIN_TOKEN="adminadmin" # Comment out to only have a user token
+
 if [ -z "$1" ]; then
 	rm -f /thinstation.img
 	truncate -s 12G /thinstation.img
@@ -30,16 +33,16 @@ parted $DISK --script mkpart primary 2GiB 100%
 parted $DISK --script name 2 SafeStore  # Set the PARTLABEL to 'SafeStore'
 
 # Setup LUKS encryption on the new partition
-#cryptsetup luksFormat -y --force-password ${DISK}${p}2
-echo -n "adminadmin" | cryptsetup luksFormat -q --force-password ${DISK}${p}2 -
-cryptsetup token import --token-id 0 /dev/loop0p2 --json-file /ts/etc/admin_token.json
+echo -n "${USER_TOKEN}" | cryptsetup luksFormat -q --force-password ${DISK}${p}2 -
+cryptsetup token import --token-id 0 /dev/loop0p2 --json-file /ts/etc/user_token.json
 
-echo -en "adminadmin\nuseruser" |cryptsetup luksAddKey -q --force-password ${DISK}${p}2 --key-slot 1 -
-cryptsetup token import --token-id 1 /dev/loop0p2 --json-file /ts/etc/user_token.json
+if [ -n "${ADMIN_TOKEN}" ]; then
+	echo -en "${USER_TOKEN}\n${ADMIN_TOKEN}" |cryptsetup luksAddKey -q --force-password ${DISK}${p}2 --key-slot 1 -
+	cryptsetup token import --token-id 1 /dev/loop0p2 --json-file /ts/etc/admin_token.json
+fi
 
 # Open the encrypted LUKS partition
-#cryptsetup open ${DISK}${p}2 cryptdisk
-echo -n "adminadmin" | cryptsetup open ${DISK}${p}2 cryptdisk -
+echo -n "${USER_TOKEN}" | cryptsetup open ${DISK}${p}2 cryptdisk -
 
 # Set up LVM on the encrypted partition
 pvcreate /dev/mapper/cryptdisk
@@ -47,7 +50,7 @@ vgcreate vg_crypt /dev/mapper/cryptdisk
 
 # Create logical volumes within the encrypted volume group
 lvcreate -L 1G -n lv_prstnt vg_crypt  # 1GB for the first volume
-lvcreate -L 2G -n lv_log vg_crypt  # 4GB for a log volume, adjust size as needed
+lvcreate -L 2G -n lv_log vg_crypt  # 2GB for a log volume, adjust size as needed
 lvcreate -L 1G -n lv_root vg_crypt
 lvcreate -L 4G -n lv_home vg_crypt
 lvcreate -l 100%FREE -n lv_tsdev vg_crypt
@@ -66,6 +69,7 @@ e2label /dev/vg_crypt/lv_root root
 e2label /dev/vg_crypt/lv_home home
 e2label /dev/vg_crypt/lv_tsdev tsdev
 
+# Inform LVM that we are about to close the volume group
 lvchange -an /dev/vg_crypt/lv_prstnt
 lvchange -an /dev/vg_crypt/lv_log
 lvchange -an /dev/vg_crypt/lv_root
