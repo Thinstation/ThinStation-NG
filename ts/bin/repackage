@@ -148,7 +148,7 @@ extract_archive()
 	                        done
 	                fi
 			if $install_port; then
-	                        dnf install --setopt=keepcache=1 -y $package
+	                        dnf install --setopt=keepcache=1 -y $package $PORTS
 	                fi
 		fi
 	done
@@ -160,9 +160,9 @@ extract_archive()
 	else
 		ppath=/build/wget_tmp
 	fi
-	rpm -qp --qf '[%{filenames} %{filecaps}\n]' $ppath/$archive.rpm > $pkgpath/file_caps.txt
 	rpm2cpio $ppath/$archive.rpm | cpio -idmv -D $pkgpath 2>/dev/null
 	extract_scripts "$ppath/$archive.rpm"
+        rpm -qp --qf '[%{filenames} %{filecaps}\n]' $ppath/$archive.rpm > $pkgpath/file_caps.txt
 	apply_caps
 
 	rm -rf $pkgpath/usr/lib/.build-id $pkgpath/usr/lib64/.build-id

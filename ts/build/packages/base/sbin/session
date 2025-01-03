@@ -39,7 +39,7 @@ if [ "$1" == "open" ]; then
 	done
 	unset IFS
 	chown -R "$TSUSER:`id -gn $TSUSER`" $HOME
-	chmod 750 $HOME
+	chmod 2700 $HOME
 fi
 
 if [ "$1" == "close" ] && [ -z "`pidof shutdown`" ] && [ -z "`pidof reboot`" ]; then
