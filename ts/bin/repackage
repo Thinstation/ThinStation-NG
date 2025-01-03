@@ -104,16 +104,18 @@ extract_scripts()
 }
 
 apply_caps() {
-    while IFS= read -r line; do
-        if [[ "$line" =~ ^(.+?)\ (.+)$ ]]; then
-            file="${BASH_REMATCH[1]}"
-            caps="${BASH_REMATCH[2]}"
-            if [[ -n "$caps" && -e "$pkgpath/$file" ]] && [[ "$caps" != '(none)' ]]; then
-                setcap "$caps" "$pkgpath/$file"
-            fi
-        fi
-    done < $pkgpath/file_caps.txt
-	rm -f $pkgpath/file_caps.txt
+    if [ -e $pkgpath/file_caps.txt ]; then
+	    while IFS= read -r line; do
+        	if [[ "$line" =~ ^(.+?)\ (.+)$ ]]; then
+	            file="${BASH_REMATCH[1]}"
+	            caps="${BASH_REMATCH[2]}"
+	            if [[ -n "$caps" && -e "$pkgpath/$file" ]] && [[ "$caps" != '(none)' ]]; then
+	                setcap "$caps" "$pkgpath/$file"
+	            fi
+	        fi
+	    done < $pkgpath/file_caps.txt
+    fi
+    rm -f $pkgpath/file_caps.txt
 }
 
 extract_archive()
@@ -162,7 +164,7 @@ extract_archive()
 	rpm2cpio $ppath/$archive.rpm | cpio -idmv -D $pkgpath 2>/dev/null
 	extract_scripts "$ppath/$archive.rpm"
 	apply_caps
-	
+
 	rm -rf $pkgpath/usr/lib/.build-id $pkgpath/usr/lib64/.build-id
 	if [ -e $pkgpath/usr/lib ] && [ -z "$(ls -A $pkgpath/usr/lib)" ]; then
 		rmdir $pkgpath/usr/lib
