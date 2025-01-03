@@ -158,6 +158,8 @@ package autonet              # Legacy automatic network configuration
 #########################
 # Miscellaneous utilities and tools.
 
+#package audit                # System audit daemon
+#package logrotate            # logrotation package
 #package e2fsprogs            # Filesystem utilities for ext2/3/4
 #package parted               # Command-line partition manager
 #package gparted              # Graphical partition manager
