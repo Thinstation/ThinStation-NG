@@ -1,7 +1,7 @@
 #!/bin/sh
 
-export PACKAGE="audit"
-export PORTS="audit audit-libs audit-rules libcap-ng-utils"
+export PACKAGE="coreutils"
+export PORTS="coreutils"
 export DROP_FILES=""
 export DROP_DIRS=""
 export CREATE_EMPTY_DIRS=""

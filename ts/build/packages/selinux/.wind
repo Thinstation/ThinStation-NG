@@ -1,0 +1,4 @@
+#020ead30c171dc6242debf0613c425a7  .dna
+rm /ts/build/packages/selinux/build/extra/bin/find
+rm /ts/build/packages/selinux/build/extra/bin/grep
+

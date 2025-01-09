@@ -32,7 +32,7 @@ if [ "$0" != "-sh" ] && [ "$0" != "-bash" ]; then
 	fi
 fi
 
-UID=`id -u`
+#uid=`id -u`
 GID=`id -g`
 APPLOGDIR=/run/user/$UID/applications
 APPLOG=$APPLOGDIR/$PACKAGE.$$

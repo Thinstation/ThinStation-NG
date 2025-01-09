@@ -3,7 +3,7 @@
 trap "" INT QUIT TSTP
 . /etc/thinstation.global
 
-if [ "`id -u`" != "0" ]; then
+if [ "$UID" != "0" ]; then
 	umask 027
 else
 	umask 022

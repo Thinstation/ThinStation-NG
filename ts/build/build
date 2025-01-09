@@ -91,13 +91,11 @@ showhelp()
 
 unmount_tmp()
 {
-	sleep 3
-	if mounted ./tmp-tree/proc; then
-		umount -f ./tmp-tree/proc
-	fi
-	if mounted ./tmp-tree/dev; then
-		umount -f ./tmp-tree/dev
-	fi
+        for mount in lib dev/pts dev proc sys run/pcscd run/user/0 run; do
+                while mounted ./tmp-tree/$mount >/dev/null; do
+                        umount ./tmp-tree/$mount
+                done
+        done
 }
 
 remove_files()
@@ -109,9 +107,11 @@ remove_files()
 		fi
 		if [ -e ./tmp-tree ] ; then
 			unmount_tmp
-			rm -Rf ./tmp-tree/*
-			rmdir ./tmp-tree
+			rm -Rf ./tmp-tree
 		fi
+                if [ -e ./tmp-stub ] ; then
+                        rm -Rf ./tmp-stub
+                fi
 		if [ -e ./fastboot-tmp ] ;then
 			rm -rf ./fastboot-tmp
 		fi
@@ -420,7 +420,7 @@ module_package_dependencies()
 										echo "Adding package dependencies for $module"
 										DISPLAYED=true
 									fi
-									echo "cp -Rp --remove-destination $pkgpath/* ./tmp-tree > /dev/null 2>&1">>\
+									echo "cp -a --remove-destination $pkgpath/* ./tmp-tree > /dev/null 2>&1">>\
 										$PACDIR/$name.package
 									touch /tmp/dirty
 									echo -e "\t\t\t\tPackage : $name"
@@ -432,7 +432,7 @@ module_package_dependencies()
 								 [ ! -e $PACDIR/$name.pkg ]; then
 								if find_package $name ; then
 									echo "building-pkg $name"
-									echo -e "cp -Rp $pkgpath/$name $PKGDIR" >> $PACDIR/$name.pkg
+									echo -e "cp -a $pkgpath/$name $PKGDIR" >> $PACDIR/$name.pkg
 									touch /tmp/dirty
 								else
 									echo "Not Found $name!!"
@@ -515,6 +515,54 @@ make_initrd()
 		find . -print0 | cpio --null -oV --format=newc | $ts_initrdcmd > ../$INITDIR/initrd
 	fi
 	cd ..
+    if [ "$ts_initrdcmd" == "squashfs" ]; then
+	mkdir tmp-stub/bin -p
+	mkdir tmp-stub/sbin -p
+	mkdir tmp-stub/sys -p
+	mkdir tmp-stub/proc -p
+	mkdir tmp-stub/dev -p
+	mkdir tmp-stub/usr -p
+	mkdir tmp-stub/lib -p
+	mkdir tmp-stub/dynamic -p
+	mkdir tmp-stub/squashfs -p
+	mkdir tmp-stub/newroot -p
+	ln -sf /bin tmp-stub/usr/bin
+        ln -sf /sbin tmp-stub/usr/sbin
+	cp `which busybox` tmp-stub/sbin/.
+	chroot tmp-stub /sbin/busybox --install -s
+	rm -f tmp-stub/linuxrc
+	rm -f tmp-stub/sbin/init
+	rm -f tmp-stub/init
+	cat << 'EOF' > tmp-stub/init
+#!/bin/sh
+
+# Mount essential filesystems
+/bin/mount -t proc none /proc
+/bin/mount -t sysfs none /sys
+/bin/mount -t devtmpfs none /dev
+
+/sbin/depmod
+/sbin/modprobe squashfs
+/sbin/modprobe overlay
+/sbin/modprobe loop
+
+/bin/mount -t squashfs /initrd.squashfs /squashfs
+/bin/mount -t tmpfs tmpfs /dynamic
+/bin/mkdir /dynamic/upper
+/bin/mkdir /dynamic/work
+/bin/mount -t overlay overlay -o lowerdir=/squashfs,upperdir=/dynamic/upper,workdir=/dynamic/work /newroot
+exec /sbin/switch_root /newroot /init "$@"
+EOF
+	chmod +x tmp-stub/init
+	for module in squashfs loop overlay; do
+		copy_module ${module}.ko.xz $KERNVER ./tmp-stub
+	done
+        cd tmp-stub
+	mv ../$INITDIR/initrd ./initrd.squashfs
+
+	find . -print0 | cpio --null -oV --format=newc | xz --threads=0 --check=crc32 > ../$INITDIR/initrd
+	cd ..
+    fi
    chmod 755 $INITDIR/initrd
    IMAGESIZE=`du -k $INITDIR/initrd | cut -f1`
    if [ $IMAGESIZE -gt $MAXIMAGE ] ; then
@@ -536,11 +584,28 @@ ROOT_DIR="."
 # Output file to store capabilities
 CAP_FILE="./etc/filecaps"
 
-# Make sure the output file is empty or does not exist
-> "$CAP_FILE"
-
 # Find all files and check for capabilities, then save them to the CAP_FILE
 find "$ROOT_DIR" -type f -exec getcap {} + | grep -v '^$' > "$CAP_FILE"
+
+# Output file to store xattrs
+XATTR_FILE="./etc/filexattrs"
+
+# Find all files and check for xattrs, then save them to the XATTR_FILE
+find "$ROOT_DIR" -type f -exec getfattr -d -m - {} + 2>/dev/null | \
+awk '
+    /^# file:/ {
+        if (filename) print filename;  # Print the previous filename if no attributes followed it
+        filename = substr($0, 8);  # Capture the new filename
+        next;  # Skip to the next record
+    }
+    $1 ~ /=/ {  # Check if the line contains an '=' character, indicating an attribute
+        printf("%s %s\n", filename, $0);  # Print filename with attribute
+        filename = "";  # Reset filename to avoid reprinting it
+    }
+    END {
+        if (filename) print filename;  # Handle the last file if it had no attributes
+    }
+' |grep -Ev "unconfined_u:object_r:default_t:s0|security.capability" > "$XATTR_FILE"
 }
 
 package_dependencies ()
@@ -572,7 +637,7 @@ package_dependencies ()
 									DISPLAYED=TRUE
 								fi
 								echo "                              package $name"
-								echo "cp -Rp --remove-destination $pkgpath/* ./tmp-tree > /dev/null 2>&1">>\
+								echo "cp -a --remove-destination $pkgpath/* ./tmp-tree > /dev/null 2>&1">>\
 									$PACDIR/$name.package
 								echo $name.package >> packages.added
 								touch /tmp/dirty
@@ -589,7 +654,7 @@ package_dependencies ()
 									DISPLAYED=TRUE
 								fi
 								echo "                         pkg $name"
-								echo -e "cp -Rp --remove-destination $pkgpath $PKGDIR" >>\
+								echo -e "cp -a --remove-destination $pkgpath $PKGDIR" >>\
 									$PACDIR/$name.pkg
 								echo $name.pkg >> packages.added
 								touch /tmp/dirty
@@ -1246,6 +1311,8 @@ done
 rm ./filelist
 # Set Additional Params
 
+#exit 1
+
 if [ -e $PACDIR/tsuser.param ]; then
 	if [  -e $PACDIR/tsuserpasswd.param ]; then
 		if [ "$ts_tsuserpasswd" == "!!" ]; then
@@ -1732,10 +1799,10 @@ filesystem_fixups()
 	chroot ./tmp-tree /sbin/busybox.shared --install -s
 
 	if [ -e ./tmp-tree/lib64/libcrypto.so.1.1 ]; then
-		cp /usr/lib64/.libcrypto.so.1.1.hmac ./tmp-tree/lib64
+		cp -a /usr/lib64/.libcrypto.so.1.1.hmac ./tmp-tree/lib64
 	fi
 	if [ -e ./tmp-tree/lib64/libssl.so.1.1 ]; then
-		cp /usr/lib64/.libssl.so.1.1.hmac ./tmp-tree/lib64
+		cp -a /usr/lib64/.libssl.so.1.1.hmac ./tmp-tree/lib64
 	fi
         if echo "$ts_kernelcmdline" |grep -q -e 'fips=1'; then
                 touch tmp-tree/FIPS
@@ -2015,7 +2082,7 @@ cd ../..
 image_fastboot()
 {
 	if [ "$ts_fastboot" == "true" ] || [ "$ts_fastboot" == "lotsofmem" ] ; then
-		cp -p $INITDIR/lib.squash $ESP
+		cp -a $INITDIR/lib.squash $ESP
 	elif [ -e $ESP/lib.squash ]; then
 		rm $ESP/lib.squash
 	fi
