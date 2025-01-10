@@ -101,8 +101,8 @@ PRETTY_NAME="ThinStation $TSVER $CODENAME"
 ANSI_COLOR="0;34"
 CPE_NAME="cpe:/o:thinstation:thinstation:$TSVER"
 HOME_URL="https://www.thinstation.org/"
-SUPPORT_URL="https://www.github.com/thinstation/thinstation"
-BUG_REPORT_URL="https://www.github.com/thinstation/thinstation"
+SUPPORT_URL="https://www.github.com/thinstation/thinstation-ng"
+BUG_REPORT_URL="https://www.github.com/thinstation/thinstation-ng"
 EOF
 
 	cat <<EOF> /etc/thinstation-release
