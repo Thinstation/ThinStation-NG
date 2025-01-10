@@ -1,0 +1,1 @@
+package="horizon"; needs="x11"; menu="Connectivity"; title="Omnissa Horizon Client"; command="pkg fullscreen horizon"; nodesktop="true"
