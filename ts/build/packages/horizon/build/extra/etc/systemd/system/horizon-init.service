@@ -3,7 +3,7 @@ Description=Configure Omnissa Horizon Client Settings
 DefaultDependencies=no
 Conflicts=shutdown.target
 After=profile-setup.service net.profile-setup.service pkg.service session.service tsinit.target
-Before=session-setup.service horizone.USBArbitrator.service
+Before=session-setup.service horizon.USBArbitrator.service
 ConditionPathIsReadWrite=/etc
 
 [Service]

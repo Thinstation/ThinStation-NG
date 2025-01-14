@@ -3,3 +3,4 @@ python3
 cups
 desktop-file-utils
 zlib-ng-compat
+openssl
