@@ -20,8 +20,14 @@ if ! pkg_initialized $PACKAGE; then
 
           CUPS_PRINTER_X_DEVICEURI=`eval echo '$CUPS_PRINTER_'$x'_DEVICEURI'`
           CUPS_PRINTER_X_DRIVER=`eval echo '$CUPS_PRINTER_'$x'_DRIVER'`
+          CUPS_PRINTER_X_DEFAULT=`eval echo '$CUPS_PRINTER_'$x'_DEFAULT'`
 
           lpadmin -p "$CUPS_PRINTER_X_NAME" -v "$CUPS_PRINTER_X_DEVICEURI" -m "$CUPS_PRINTER_X_DRIVER" -E
+
+          # Set as default if specified
+          if is_enabled $CUPS_PRINTER_X_DEFAULT; then
+            lpadmin -d "$CUPS_PRINTER_X_NAME"
+          fi
 
           let x=x+1
           CUPS_PRINTER_X_NAME=`eval echo '\$CUPS_PRINTER_'$x'_NAME'`
