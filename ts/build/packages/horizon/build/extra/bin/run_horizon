@@ -15,4 +15,4 @@ esac
 shift
 done
 
-eval omnissa-horizon $ARGS
+eval horizon-client $ARGS
