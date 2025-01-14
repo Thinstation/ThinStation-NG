@@ -1,5 +1,0 @@
-#!/bin/sh
-export PACKAGE=cups-lexmark
-export RPM=`basename $1`
-repackage -e
-
