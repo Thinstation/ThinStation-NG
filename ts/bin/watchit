@@ -1,14 +1,14 @@
 #!/bin/bash
 
 new_file() {
-    if [ "$(stat -c '%Y' "$1")" -ne "$epoch_time" ]; then
+    if [ "$(stat -c '%X' "$1")" -ne "$epoch_time" ]; then
         echo "$1"
     fi
 }
 export -f new_file
 
 stamp() {
-    touch -c -h -t "$timestamp" "$1"
+    touch -a -c -h -t "$timestamp" "$1"
 }
 export -f stamp
 
@@ -31,7 +31,8 @@ for dir in $scan_dirs; do
 done
 
 # Run user-specified command
-"$@"
+#"$@"
+echo "This is a test." | lp
 
 # Identify new files
 for dir in $scan_dirs; do

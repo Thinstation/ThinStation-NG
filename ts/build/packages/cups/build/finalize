@@ -10,7 +10,10 @@ chmod 755 /etc/cups/interfaces /etc/cups/ppd
 chmod 700 /etc/cups/ssl
 
 systemctl enable cups.init.service
-systemctl enable cups.service
-systemctl enable cups-lpd.socket
-systemctl enable cups.socket
-systemctl enable cups.path
+#systemctl enable cups.service
+#systemctl enable cups-lpd.socket
+#systemctl enable cups.socket
+#systemctl enable cups.path
+. /build/scripts/cups-browsed_postinstall.sh 1
+. /build/scripts/cups-client_postinstall.sh 1
+. /build/scripts/cups_postinstall.sh 1

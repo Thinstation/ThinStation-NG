@@ -1,3 +1,5 @@
-#0667a4babc072fc8ea6464c51c4a80fc  .dna
+#f08b37f0102ff0b3dd75d599cafa68e3  .dna
 rm /ts/build/packages/cups/build/extra/bin/pdftops
+rm /ts/build/packages/cups/build/extra/bin/gawk
+rm /ts/build/packages/cups/build/extra/bin/sed
 

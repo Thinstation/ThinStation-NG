@@ -15,22 +15,22 @@
 
 systemctl enable horizon-init
 
-ln -s /lib64/libudev.so.1 /usr/lib/omnissa/libudev.so.0
-ln -s /lib64//lib64/libsecret-1.so.0 /usr/lib/omnissa/libsecret.so
+ln -s /lib64/libudev.so.1 /lib64/omnissa/libudev.so.0
+ln -s /lib64/libsecret-1.so.0 /lib64/omnissa/libsecret.so
 
-bash /usr/lib/omnissa/horizon/integratedPrinting/integrated-printing-setup.sh -i
+bash /lib64/omnissa/horizon/integratedPrinting/integrated-printing-setup.sh -i
 
 update-desktop-database
 
-python3 /usr/lib/omnissa/horizon/urlRedirection/install-url-redirection.py -i
+python3 /lib64/omnissa/horizon/urlRedirection/install-url-redirection.py -i
 
 touch /etc/hosts
 sed -i '1i127.0.0.1 horizon-localhost' /etc/hosts
 
-chmod 755 /usr/lib/omnissa/horizon/html5mmr/HTML5VideoPlayer /usr/lib/omnissa/horizon/html5mmr/chrome_100_percent.pak /usr/lib/omnissa/horizon/html5mmr/chrome_200_percent.pak /usr/lib/omnissa
-chmod 755 /usr/lib/omnissa/horizon/vdpService/webrtcRedir/libwebrtc_sharedlib.so
+chmod 755 /lib64/omnissa/horizon/html5mmr/HTML5VideoPlayer /lib64/omnissa/horizon/html5mmr/chrome_100_percent.pak /lib64/omnissa/horizon/html5mmr/chrome_200_percent.pak /lib64/omnissa
+chmod 755 /lib64/omnissa/horizon/vdpService/webrtcRedir/libwebrtc_sharedlib.so
 
-ln -sf /usr/lib/omnissa/horizon/usb/horizon-eucusbarbitrator /usr/bin/horizon-eucusbarbitrator
+ln -sf /lib64/omnissa/horizon/usb/horizon-eucusbarbitrator /bin/horizon-eucusbarbitrator
 
 systemctl enable ftscanhv
 systemctl enable ftsprh

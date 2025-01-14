@@ -6,3 +6,4 @@ wget
 ca-certificates
 hwlister
 nano
+file

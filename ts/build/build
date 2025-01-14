@@ -586,6 +586,7 @@ CAP_FILE="./etc/filecaps"
 
 # Find all files and check for capabilities, then save them to the CAP_FILE
 find "$ROOT_DIR" -type f -exec getcap {} + | grep -v '^$' > "$CAP_FILE"
+#if [ -z "`cat $CAP_FILE`" ]; then rm $CAP_FILE; fi
 
 # Output file to store xattrs
 XATTR_FILE="./etc/filexattrs"
@@ -606,6 +607,7 @@ awk '
         if (filename) print filename;  # Handle the last file if it had no attributes
     }
 ' |grep -Ev "unconfined_u:object_r:default_t:s0|security.capability" > "$XATTR_FILE"
+if [ -z "`cat $XATTR_FILE`" ]; then rm $XATTR_FILE; fi
 }
 
 package_dependencies ()
