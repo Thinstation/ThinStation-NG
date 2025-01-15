@@ -10,7 +10,7 @@ if ! pkg_initialized $PACKAGE; then
         echo "FileDevice yes" >> /etc/cups/cups-files.conf
 
         # restart after configure FileDevice
-        systemctl restart org.cups.cupsd.service
+        systemctl restart cups
 
         #  cups printers
         let x=0
