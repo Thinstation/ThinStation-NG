@@ -2,6 +2,8 @@
 
 if [ -e /FIPS ]; then
         cp -a /etc/crypto-policies/FIPS/* /etc/crypto-policies/.
+	mkdir -p /etc/gcrypt
+	touch /etc/gcrypt/fips_enabled
         rm -rf /FIPS
 	systemctl enable fips-crypto-policy-overlay
 else
