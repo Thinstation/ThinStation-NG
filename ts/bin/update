@@ -145,12 +145,12 @@ updatefiles()
 	fi
 	if [ -n "$lfile" ]; then
 		if [ "$loc" == "" ] ; then
-			cmdlist="${cmdlist}ln /$lfile $DEST/$dfile\n"
+			cmdlist="${cmdlist}ln $lfile $DEST/$dfile\n"
 		elif	[ ! -d $DEST/$loc ] || $DRYRUN ; then
 			cmdlist="${cmdlist}mkdir -p $DEST/$loc\n"
-			cmdlist="${cmdlist}ln /$lfile $DEST/$loc/$dfile\n"
+			cmdlist="${cmdlist}ln $lfile $DEST/$loc/$dfile\n"
 		else
-			cmdlist="${cmdlist}ln /$lfile $DEST/$loc/$dfile\n"
+			cmdlist="${cmdlist}ln $lfile $DEST/$loc/$dfile\n"
 		fi
 	else
 		echo "Error processing $file"

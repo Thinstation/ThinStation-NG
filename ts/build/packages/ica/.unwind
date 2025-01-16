@@ -2,5 +2,5 @@
 
 mkdir -p /ts/build/packages/ica/build/extra/bin
 mkdir -p /ts/build/packages/ica/build/extra/sbin
-ln //usr/bin/logger /ts/build/packages/ica/build/extra/bin/logger
-ln //usr/sbin/useradd /ts/build/packages/ica/build/extra/sbin/useradd
+ln /usr/bin/logger /ts/build/packages/ica/build/extra/bin/logger
+ln /usr/sbin/useradd /ts/build/packages/ica/build/extra/sbin/useradd

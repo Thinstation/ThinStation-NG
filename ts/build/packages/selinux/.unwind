@@ -1,5 +1,5 @@
 #020ead30c171dc6242debf0613c425a7  .dna
 
 mkdir -p /ts/build/packages/selinux/build/extra/bin
-ln //usr/bin/find /ts/build/packages/selinux/build/extra/bin/find
-ln //usr/bin/grep /ts/build/packages/selinux/build/extra/bin/grep
+ln /usr/bin/find /ts/build/packages/selinux/build/extra/bin/find
+ln /usr/bin/grep /ts/build/packages/selinux/build/extra/bin/grep
