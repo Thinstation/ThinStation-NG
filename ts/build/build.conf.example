@@ -240,6 +240,10 @@ package xorg7-qxl            # QXL drivers for QEMU/SPICE virtual machines
 package xorg7-vmware         # VMware GPU drivers
 #package xorg7vnc             # Start a VNC server for remote administration
                               # This should be considered very carefully
+                              # You might consider using persistent-files and
+                              # generating per host server certificates.
+                              # Considerable thought should be applied to the
+                              # cmdline that will used to launch this.
 
 # Optional proprietary drivers
 # package xorg7_nvidia       # NVIDIA proprietary driver
