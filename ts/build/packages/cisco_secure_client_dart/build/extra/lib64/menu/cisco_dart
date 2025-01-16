@@ -1,0 +1,1 @@
+package="cisco_secure_client_dart"; icon="cisco-secure-client-dart"; needs="x11"; title="Cisco Secure Client - DART"; command="/opt/cisco/secureclient/dart/dartui"; menu="Connectivity"; metric=20; nodesktop="true"

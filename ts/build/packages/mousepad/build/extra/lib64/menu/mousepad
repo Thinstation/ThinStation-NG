@@ -1,0 +1,1 @@
+package="mousepad"; icon="org.xfce.mousepad"; needs="x11"; title="Notepad"; command="mousepad"; menu="Utilities"; nodesktop="true"

@@ -32,14 +32,14 @@ if [ "$0" != "-sh" ] && [ "$0" != "-bash" ]; then
 	fi
 fi
 
-#uid=`id -u`
+uid=`id -u`
 GID=`id -g`
-APPLOGDIR=/run/user/$UID/applications
+APPLOGDIR=/run/user/$uid/applications
 APPLOG=$APPLOGDIR/$PACKAGE.$$
 export APPLOGDIR APPLOG
 if [ ! -e $APPLOGDIR ]; then
         mkdir -p $APPLOGDIR
-        chown $UID:$GID $APPLOGDIR
+        chown $uid:$GID $APPLOGDIR
         chmod 2700 $APPLOGDIR
 fi
 

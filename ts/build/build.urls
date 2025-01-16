@@ -21,3 +21,5 @@ param https_everywhereurl	https://addons.cdn.mozilla.net/user-media/addons/22991
 param noscripturl		https://addons.cdn.mozilla.net/user-media/addons/722/noscript_security_suite-11.1.5-an+fx.xpi
 param teamsurl		https://packages.microsoft.com/repos/ms-teams/pool/main/t/teams/teams_1.4.00.4855_amd64.deb
 param cups_lexmarkurl   file://downloads/Lexmark-UPD-PPD-Files-1.2.0-03212024.x86_64.rpm
+param cisco_secure_client_darturl   file://downloads/cisco-secure-client-dart-5.1.7.80-1.x86_64.rpm
+param cisco_secure_client_vpnurl   file://downloads/cisco-secure-client-vpn-5.1.7.80-1.x86_64.rpm

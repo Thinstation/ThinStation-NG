@@ -1,0 +1,5 @@
+#!/bin/sh
+
+export PACKAGE=cisco_secure_client_dart
+repackage -c
+
