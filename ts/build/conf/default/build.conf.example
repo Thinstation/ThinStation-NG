@@ -238,6 +238,8 @@ package xorg7                # X.Org server and core utilities with KMS drivers
 #package xorg7-nouveau        # NVIDIA open-source GPU drivers
 package xorg7-qxl            # QXL drivers for QEMU/SPICE virtual machines
 package xorg7-vmware         # VMware GPU drivers
+#package xorg7vnc             # Start a VNC server for remote administration
+                              # This should be considered very carefully
 
 # Optional proprietary drivers
 # package xorg7_nvidia       # NVIDIA proprietary driver

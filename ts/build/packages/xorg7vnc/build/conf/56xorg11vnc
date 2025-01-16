@@ -1,0 +1,2 @@
+# XORG_VNC_CMD       Define the x11vnc commdand that will be executed by the user session.
+XORG_VNC_CMD="/bin/x11vnc -rfbauth /etc/.vncpasswd -many -bg"
