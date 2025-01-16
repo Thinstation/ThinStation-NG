@@ -560,7 +560,7 @@ EOF
         cd tmp-stub
 	mv ../$INITDIR/initrd ./initrd.squashfs
 
-	find . -print0 | cpio --null -oV --format=newc | xz --threads=0 --check=crc32 > ../$INITDIR/initrd
+	find . -print0 | cpio --null -oV --format=newc > ../$INITDIR/initrd
 	cd ..
     fi
    chmod 755 $INITDIR/initrd
