@@ -34,9 +34,15 @@ fi
 
 uid=`id -u`
 GID=`id -g`
-APPLOGDIR=/run/user/$uid/applications
+USERRUNDIR=/run/user/$uid
+APPLOGDIR=$USERRUNDIR/applications
 APPLOG=$APPLOGDIR/$PACKAGE.$$
-export APPLOGDIR APPLOG
+export USERRUNDIR APPLOGDIR APPLOG
+if [ ! -e $USERRUNDIR ]; then
+	mkdir -p $USERRUNDIR
+        chown $uid:$GID $USERRUNDIR
+        chmod 2700 $USERRUNDIR
+fi
 if [ ! -e $APPLOGDIR ]; then
         mkdir -p $APPLOGDIR
         chown $uid:$GID $APPLOGDIR
