@@ -170,7 +170,6 @@ package autonet              # Legacy automatic network configuration
 #package extensions           # Extra system utilities
 #package extensions-x         # Extra X11 utilities and tools
 #package jq                   # Lightweight JSON processor
-#package file-roller          # Archive manager for compressed files
 #package nmap                 # Network analysis tool
 
 ############################
@@ -183,6 +182,10 @@ package chrome               # Google Chrome browser
 #package filezilla            # FileZilla FTP client
 #package meld                 # Visual diff and merge tool
 #package geany                # Lightweight IDE
+#package pinta                # Simple Paint like application
+#package galculator           # Scientific calculator
+#package mousepad             # Simple Notepad like application
+#package file-roller          # Archive manager for compressed files
 
 ###########################################
 ### --- Remote Desktop Applications --- ###
