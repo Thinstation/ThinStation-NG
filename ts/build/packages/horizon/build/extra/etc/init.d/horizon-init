@@ -2,6 +2,7 @@
 
 . `dirname $0`/common
 . /etc/horizon.functions
+
 HOME=/etc/skel
 
 if [ -n $DEBUG_NETWORK ] ; then
@@ -11,37 +12,37 @@ fi
 if ! pkg_initialized $PACKAGE; then
 	pkg_set_init_flag $PACKAGE
 
-	if [ ! -e /etc/skel/.omnissa ] ; then
-		mkdir -p /etc/skel/.omnissa
+	if [ ! -e $HOME/.omnissa ] ; then
+		mkdir -p $HOME/.omnissa
 	fi
 
 	(ls -1 /etc/omnissa/*.vdm 2>/dev/null) |
 	while read filename ; do
-		cp $filename /etc/skel/.omnissa/.
+		cp $filename $HOME/.omnissa/.
 	done
 
 	if [ -n "$PKCS11_MODULE" ] && [ -e "$PKCS11_MODULE" ]; then
-		mkdir -p /lib/omnissa/view/pkcs11
-		ln -s $PKCS11_MODULE /lib/omnissa/horizon/pkcs11/
+		mkdir -p /lib64/omnissa/horizon/pkcs11
+		ln -s $PKCS11_MODULE /lib64/omnissa/horizon/pkcs11/
 	fi
 
 	if [ -z "$HORIZON_AUTOCONNECT" ]; then HORIZON_AUTOCONNECT="TRUE"; fi
 	if [ -z "$HORIZON_SSLVERIFYMODE" ]; then HORIZON_SSLVERIFYMODE=3; fi
-	if [ ! -e /etc/skel/.omnissa/horizon-preferences ]; then
-		echo "view.autoConnectBroker = \"$HORIZON_AUTOCONNECT\"" > /etc/skel/.omnissa/horizon-preferences
+	if [ ! -e $HOME/.omnissa/horizon-preferences ]; then
+		echo "view.autoConnectBroker = \"$HORIZON_AUTOCONNECT\"" > $HOME/.omnissa/horizon-preferences
 		# ignore bad ssl certificate
-		echo "view.sslVerificationMode = \"$HORIZON_SSLVERIFYMODE\"" >> /etc/skel/.omnissa/horizon-preferences
+		echo "view.sslVerificationMode = \"$HORIZON_SSLVERIFYMODE\"" >> $HOME/.omnissa/horizon-preferences
 		if [ -n "$HORIZON_DEFAULTBROKER" ]; then
-			echo "view.defaultBroker = \"$HORIZON_DEFAULTBROKER\"" >> /etc/skel/.omnissa/horizon-preferences
+			echo "view.defaultBroker = \"$HORIZON_DEFAULTBROKER\"" >> $HOME/.omnissa/horizon-preferences
 		fi
 		if [ -n "$HORIZON_SSLPROTOCOL" ]; then
-		    echo "view.sslProtocolString = \"$HORIZON_SSLPROTOCOL\"" >> /etc/skel/.omnissa/horizon-preferences
+		    echo "view.sslProtocolString = \"$HORIZON_SSLPROTOCOL\"" >> $HOME/.omnissa/horizon-preferences
 		fi
 		if [ -n "$HORIZON_SSLCIPHERS" ]; then
-		    echo "view.sslCipherString = \"$HORIZON_SSLCIPHER\"" >> /etc/skel/.omnissa/horizon-preferences
+		    echo "view.sslCipherString = \"$HORIZON_SSLCIPHER\"" >> $HOME/.omnissa/horizon-preferences
 		fi
 		if [ -n "$HORIZON_DATASHARING" ]; then
-		    echo "view.enableDataSharing = \"$HORIZON_DATASHARING\"" >> /etc/skel/.omnissa/horizon-preferences
+		    echo "view.enableDataSharing = \"$HORIZON_DATASHARING\"" >> $HOME/.omnissa/horizon-preferences
 		fi
 
 	fi
@@ -53,11 +54,9 @@ if ! pkg_initialized $PACKAGE; then
 			VDITITLE=`eval echo '$SESSION_'$x'_TITLE'`
 			VDITITLE=`replace_char "$VDITITLE" " " "_"`
 			VDIPARAMS=/tmp/VDI$VDITITLE
-			VDICONFIG=/etc/skel/.omnissa/$VDITITLE.vdm
+			VDICONFIG=$HOME/.omnissa/$VDITITLE.vdm
 			VDIICON=`eval echo '$SESSION_'$x'_ICON'`
 			touch $VDICONFIG
-			# we need to pass the TS selected keyboard map through to rdesktop
-			#rdesktopoptions="-k $KEYBOARD_MAP"
 
 			set | grep "SESSION_"$x"_HORIZON_"  > $VDIPARAMS
 			while read session; do
@@ -68,7 +67,6 @@ if ! pkg_initialized $PACKAGE; then
 				vdivalue=`eval echo $var`
 				# fix for mixed case (case sensitive) parameters
 				if [ "$vdioption" == "serverurl" ] ; then vdioption="serverURL" ; VDISERVER=$vdivalue ; fi
-				#if [ "$vdioption" == "server" ] ; then vdioption="serverURL" ; VDISERVER=$vdivalue ; fi
 				if [ "$vdioption" == "noninteractive" ] ; then vdioption="nonInteractive" ; fi
 				if [ "$vdioption" == "desktopname" ] ; then vdioption="desktopName" ; fi
 				if [ "$vdioption" == "domainname" ] ; then vdioption="domainName" ; fi
