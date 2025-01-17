@@ -22,7 +22,7 @@ if ! pkg_initialized $PACKAGE; then
 
 	if [ -n "$PKCS11_MODULE" ] && [ -e "$PKCS11_MODULE" ]; then
 		mkdir -p /lib/omnissa/view/pkcs11
-		ln -s $PKCS11_MODULE /lib/omnissa/view/pkcs11/
+		ln -s $PKCS11_MODULE /lib/omnissa/horizon/pkcs11/
 	fi
 
 	if [ -z "$HORIZON_AUTOCONNECT" ]; then HORIZON_AUTOCONNECT="TRUE"; fi
@@ -57,7 +57,7 @@ if ! pkg_initialized $PACKAGE; then
 			VDIICON=`eval echo '$SESSION_'$x'_ICON'`
 			touch $VDICONFIG
 			# we need to pass the TS selected keyboard map through to rdesktop
-			rdesktopoptions="-k $KEYBOARD_MAP"
+			#rdesktopoptions="-k $KEYBOARD_MAP"
 
 			set | grep "SESSION_"$x"_HORIZON_"  > $VDIPARAMS
 			while read session; do
@@ -68,7 +68,7 @@ if ! pkg_initialized $PACKAGE; then
 				vdivalue=`eval echo $var`
 				# fix for mixed case (case sensitive) parameters
 				if [ "$vdioption" == "serverurl" ] ; then vdioption="serverURL" ; VDISERVER=$vdivalue ; fi
-				if [ "$vdioption" == "server" ] ; then vdioption="serverURL" ; VDISERVER=$vdivalue ; fi
+				#if [ "$vdioption" == "server" ] ; then vdioption="serverURL" ; VDISERVER=$vdivalue ; fi
 				if [ "$vdioption" == "noninteractive" ] ; then vdioption="nonInteractive" ; fi
 				if [ "$vdioption" == "desktopname" ] ; then vdioption="desktopName" ; fi
 				if [ "$vdioption" == "domainname" ] ; then vdioption="domainName" ; fi
@@ -93,14 +93,6 @@ if ! pkg_initialized $PACKAGE; then
 						echo "--$vdioption" >> $VDICONFIG
 					fi
 				;;
-				rdesktopOptions)
-					# allow for passthrough of user specified rdesktop options - one ONLY
-					rdesktopoptions="${rdesktopoptions} ${vdivalue}"
-				;;
-				xfreerdpOptions)
-					# allow for passthrough of user specified xfreerdp options - one ONLY
-					xfreerdpoptions="${xfreerdpoptions} ${vdivalue}"
-				;;
 				options)
 					# ignore
 				;;
@@ -111,6 +103,9 @@ if ! pkg_initialized $PACKAGE; then
 				# allow for multiple USB
 				elif [ `expr match "$vdioption" 'usb'` == "3" ] ; then
 					echo "--usb='$vdivalue'" >> $VDICONFIG
+				# server to populate command argument for desktop icon
+				elif [ "$vdioption" == "server" ] ; then
+					echo ""
 				# the rest are just option=value
 				else
 					if [ -z "`echo $vdivalue | grep ' '`" ]; then
@@ -122,16 +117,6 @@ if ! pkg_initialized $PACKAGE; then
 				;;
 				esac
 			done < $VDIPARAMS
-			# make sure we set at least the keyboard map
-			echo "--rdesktopOptions='$rdesktopoptions'" >> $VDICONFIG
-			if [ -n "$xfreerdpoptions" ]; then
-				echo "--xfreerdpOptions='$xfreerdpoptions'" >> $VDICONFIG
-			fi
-			if is_disabled $VDIICON; then
-				if [ -n "$VDISERVER" ]; then
-					echo "$VDISERVER" >> /etc/skel/.omnissa/horizon-recent-brokers
-				fi
-			fi
 		fi
 		let x=x+1
 	done
