@@ -13,7 +13,7 @@
 #	rm -rf /etc/skel/.thnuclnt
 #fi
 
-. /build/scripts/Omnissa-Horizon-Client_postinstall.sh
+#. /build/scripts/Omnissa-Horizon-Client_postinstall.sh
 
 systemctl enable horizon-init
 
