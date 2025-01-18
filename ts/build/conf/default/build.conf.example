@@ -192,7 +192,8 @@ package chrome               # Google Chrome browser
 ###########################################
 package freerdp              # RDP client
 #package ica                  # Citrix ICA
-#package vmview               # VMware Horizon
+#package vmview               # VMware Horizon (Legacy 8.13.0 or lower)
+#package horizon              # Omnissa Horizon (8.14.0)
 #package thinlinc             # Cendio ThinLinc
 
 ##############################
