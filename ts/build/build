@@ -516,47 +516,33 @@ make_initrd()
 	fi
 	cd ..
     if [ "$ts_initrdcmd" == "squashfs" ]; then
-	mkdir tmp-stub/bin -p
 	mkdir tmp-stub/sbin -p
-	mkdir tmp-stub/sys -p
-	mkdir tmp-stub/proc -p
 	mkdir tmp-stub/dev -p
-	mkdir tmp-stub/usr -p
-	mkdir tmp-stub/lib -p
 	mkdir tmp-stub/dynamic -p
 	mkdir tmp-stub/squashfs -p
 	mkdir tmp-stub/newroot -p
-	ln -sf /bin tmp-stub/usr/bin
-        ln -sf /sbin tmp-stub/usr/sbin
 	cp `which busybox` tmp-stub/sbin/.
-	chroot tmp-stub /sbin/busybox --install -s
-	rm -f tmp-stub/linuxrc
-	rm -f tmp-stub/sbin/init
-	rm -f tmp-stub/init
 	cat << 'EOF' > tmp-stub/init
-#!/bin/sh
-
-# Mount essential filesystems
-/bin/mount -t proc none /proc
-/bin/mount -t sysfs none /sys
-/bin/mount -t devtmpfs none /dev
-
-/sbin/depmod
-/sbin/modprobe squashfs
-/sbin/modprobe overlay
-/sbin/modprobe loop
-
-/bin/mount -t squashfs /initrd.squashfs /squashfs
-/bin/mount -t tmpfs tmpfs /dynamic
-/bin/mkdir /dynamic/upper
-/bin/mkdir /dynamic/work
-/bin/mount -t overlay overlay -o lowerdir=/squashfs,upperdir=/dynamic/upper,workdir=/dynamic/work /newroot
-exec /sbin/switch_root /newroot /init "$@"
+#!/sbin/busybox ash
+/sbin/busybox mount -t devtmpfs none /dev
+/sbin/busybox modprobe squashfs
+/sbin/busybox modprobe overlay
+/sbin/busybox modprobe loop
+/sbin/busybox mount -t squashfs /initrd.squashfs /squashfs
+/sbin/busybox mount -t tmpfs tmpfs /dynamic
+/sbin/busybox mkdir /dynamic/upper
+/sbin/busybox mkdir /dynamic/work
+/sbin/busybox mount -t overlay overlay -o lowerdir=/squashfs,upperdir=/dynamic/upper,workdir=/dynamic/work /newroot
+exec /sbin/busybox switch_root /newroot /init "$@"
 EOF
 	chmod +x tmp-stub/init
+
 	for module in squashfs loop overlay; do
 		copy_module ${module}.ko.xz $KERNVER ./tmp-stub
 	done
+        depmod -b ./tmp-stub $KERNVER 2>/dev/null
+	rm ./tmp-stub/lib/modules/$KERNVER/modules.{alias,alias.bin,builtin.alias.bin,builtin.bin,dep.bin,devname,softdep,symbols,symbols.bin,weakdep}
+
         cd tmp-stub
 	mv ../$INITDIR/initrd ./initrd.squashfs
 
