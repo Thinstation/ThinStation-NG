@@ -44,8 +44,6 @@ stage1()
 	dnf install --setopt=keepcache=1 -y --installroot=$ROOT $host_config --releasever=41 --allowerasing $core_ports $kernel_ports $grub_ports $firmware_ports
 	dnf group install --setopt=keepcache=1 -y --installroot=$ROOT $host_config --releasever=41 "$xfce"
 	dnf install --setopt=keepcache=1 -y --installroot=$ROOT $host_config --releasever=41 --allowerasing $misc_ports
-#	dnf install --setopt=keepcache=1 -y --installroot=$ROOT $host_config --releasever=41 $other_ports
-#	dnf install --setopt=keepcache=1 -y --installroot=$ROOT $host_config --releasever=41 $(cat $ROOT/ts/etc/rpms)
 	cd $ROOT
 	touch $ROOT/dostage2
 }
@@ -77,14 +75,7 @@ stage2()
 
 stage3()
 {
-	cat << EOF > etc/yum.repos.d/thinstation.repo
-[thinstation-rpms]
-name=ThinStation RPM Repository
-baseurl=https://raw.githubusercontent.com/Thinstation/thinstation-rpms/refs/heads/main/x86_64/
-enabled=1
-gpgcheck=0
-priority=1
-EOF
+	cp -a /ts/repos/* /etc/yum.repos.d/.
 	dnf makecache
 	dnf install --setopt=keepcache=1 -y --allowerasing $ts_ports
 	for Root in $TSWRKNG $XTRWRKNG; do
