@@ -212,7 +212,28 @@ package vboxguest            # VirtualBox guest additions
 
 #param fulllocales    true    # Generate extra locales for each language. Usually not needed.
 
+#package locale-cs_CZ         # Czech
+#package locale-da_DK         # Danish
+#package locale-de_DE         # German
+#package locale-en_GB         # English (Great Britain)
 package locale-en_US         # English (US)
+#package locale-es_ES         # Spanish
+#package locale-fi_FI         # Finnish
+#package locale-fr_BE         # French (Belgium)
+#package locale-fr_CA         # French (Canadian)
+#package locale-fr_CH         # French (Switzerland)
+#package locale-fr_FR         # French
+#package locale-hr_HR         # Croation
+#package locale-hu_HU         # Hungarian
+#package locale-it_IT         # Italian
+#package locale-ja_JP         # Japanese
+#package locale-nb_NO         # Norwegian (bokm  l)
+#package locale-pl_PL         # Polish
+#package locale-pt_PT         # Portuguese
+#package locale-pt_BR         # Portuguese (Brazil)
+#package locale-ru_RU         # Russian
+#package locale-sv_SE         # Swedish
+#package locale-tr_TR         # Turkish
 
 #############################
 ### --- Date and Time --- ###

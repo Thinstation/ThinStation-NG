@@ -42,6 +42,10 @@ if is_enabled $XFWM4_KIOSK; then
 
 <channel name="xfce4-keyboard-shortcuts" version="1.0">
   <property name="commands" type="empty">
+    <property name="custom" type="empty">
+      <property name="&lt;Alt&gt;i" type="string" value="about"/>
+      <property name="override" type="bool" value="true"/>
+    </property>
     <property name="default" type="empty">
       <property name="&lt;Alt&gt;F1" type="string" value=""/>
       <property name="&lt;Alt&gt;F2" type="string" value="">
