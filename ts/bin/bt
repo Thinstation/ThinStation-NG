@@ -23,7 +23,7 @@ setup_qemu()
 #       SOUND="-device AC97"
 	SOUND="-audiodev pipewire,id=pw -device AC97,audiodev=pw"
         CPU="-smp cores=$procs,threads=1,sockets=1"
-        MEMORY="-m 14336"
+        MEMORY="-m 4096"
 #       RNG="-object rng-random,id=RNG"
         MOUSE="-usb -device usb-tablet"
         KVM="-enable-kvm"
