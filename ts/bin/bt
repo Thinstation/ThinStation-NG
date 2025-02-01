@@ -22,7 +22,7 @@ setup_qemu()
 #       VGA="-vga vmware"
 #       SOUND="-device AC97"
 	SOUND="-audiodev pipewire,id=pw -device AC97,audiodev=pw"
-        CPU="-smp cores=$procs,threads=1,sockets=1"
+        CPU="-machine q35 -smp cores=$procs,threads=1,sockets=1"
         MEMORY="-m 4096"
 #       RNG="-object rng-random,id=RNG"
         MOUSE="-usb -device usb-tablet"
