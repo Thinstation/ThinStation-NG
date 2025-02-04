@@ -1,7 +1,7 @@
 #!/bin/sh
 
-export PACKAGE="libinput"
-export PORTS="libinput xorg-x11-drv-evdev"
+export PACKAGE="xorg7-xinput"
+export PORTS="xorg-x11-drv-libinput xinput libinput"
 export DROP_FILES=""
 export DROP_DIRS=""
 export CREATE_EMPTY_DIRS=""

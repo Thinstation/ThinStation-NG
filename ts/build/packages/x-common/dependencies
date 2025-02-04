@@ -1,7 +1,7 @@
 mesa
 vulkan
 xkeyboard-config
-libinput
+xorg7-xinput
 base-nss
 messagebox
 plymouth

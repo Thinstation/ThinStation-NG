@@ -350,7 +350,7 @@ param bootverbosity  3                      # Increased loggin when booting TS
                                 			#
                                 			#  Combinations can be used (e.g.12 does Kernel and Module Messages)
 
-#param fastboot       lotsofmem              # Mangles the filesystem a special way as to improve boot speed and reduce
+param fastboot       lotsofmem              # Mangles the filesystem a special way as to improve boot speed and reduce
                                             # memory utilization. Cool/Dangerous . Harder to dubug other packages. (Finishing Touch)
                                             # Set to 'true' for memory constrained systems or 'lotsofmem' for anything modern.
 param squashopt      "-comp xz"             # Settings to be passed to mksquashfs for fastboot

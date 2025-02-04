@@ -2,6 +2,8 @@
 systemd-sysusers
 systemd-tmpfiles --create
 
+rm -rf /lib64/doc
+
 dbus-uuidgen > /etc/machine-id
 chmod 0444 /etc/machine-id
 
