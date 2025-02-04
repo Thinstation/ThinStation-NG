@@ -1189,8 +1189,8 @@ fi
 if is_enabled $ts_earlymicrocode ; then
 	echo "Creating Early Microcode!"
 	mkdir -p kernel/x86/microcode
-	cat /lib64/firmware/intel-ucode/*-*-* > kernel/x86/microcode/GenuineIntel.bin
-	cat /lib64/firmware/amd-ucode/microcode_amd*.bin > kernel/x86/microcode/AuthenticAMD.bin
+	cat /usr/lib/firmware/intel-ucode/*-*-* > kernel/x86/microcode/GenuineIntel.bin
+	cat /usr/lib/firmware/amd-ucode/microcode_amd*.bin > kernel/x86/microcode/AuthenticAMD.bin
 	ls kernel/x86/microcode/* | cpio -o -C 1024 -H newc -R 0:0 > $INITDIR/ucode
 	rm -rf kernel/x86
 elif is_enabled $ts_allfirmware ; then
