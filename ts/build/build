@@ -1195,13 +1195,13 @@ if is_enabled $ts_earlymicrocode ; then
 	rm -rf kernel/x86
 elif is_enabled $ts_allfirmware ; then
 	echo "Doing an All Firmware Build!"
-	if [ -e /lib64/firmware/amd-ucode ]; then
-	    for microcode in `find /lib64/firmware/amd-ucode -type f |cut -d "/" -f4-`; do
+	if [ -e /usr/lib/firmware/amd-ucode ]; then
+	    for microcode in `find /usr/lib/firmware/amd-ucode -type f |cut -d "/" -f4-`; do
 		copy_firmware $microcode
 	    done
 	fi
-	if [ -e /lib64/firmware/intel-ucode ]; then
-	    for microcode in `find /lib64/firmware/intel-ucode -type f |cut -d "/" -f4-`; do
+	if [ -e /usr/lib/firmware/intel-ucode ]; then
+	    for microcode in `find /usr/lib/firmware/intel-ucode -type f |cut -d "/" -f4-`; do
 		copy_firmware $microcode
 	    done
 	fi
