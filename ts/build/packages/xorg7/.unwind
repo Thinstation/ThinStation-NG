@@ -1,4 +1,4 @@
-#1b77a5054c7867cefbfad2554ce6a2bb  .dna
+#ba5c57a358cc84451ebbe38d90071847  .dna
 
 mkdir -p /ts/build/packages/xorg7/bin
 mkdir -p /ts/build/packages/xorg7/etc/pam.d
@@ -20,6 +20,7 @@ ln /usr/lib64/xorg/modules/extensions/libglx.so /ts/build/packages/xorg7/lib64/x
 ln /usr/lib64/xorg/modules/input/evdev_drv.so /ts/build/packages/xorg7/lib64/xorg/modules/input/evdev_drv.so
 ln /usr/lib64/xorg/modules/libexa.so /ts/build/packages/xorg7/lib64/xorg/modules/libexa.so
 ln /usr/lib64/xorg/modules/libfbdevhw.so /ts/build/packages/xorg7/lib64/xorg/modules/libfbdevhw.so
+ln /usr/lib64/xorg/modules/libglamoregl.so /ts/build/packages/xorg7/lib64/xorg/modules/libglamoregl.so
 ln /usr/lib64/xorg/modules/libshadow.so /ts/build/packages/xorg7/lib64/xorg/modules/libshadow.so
 ln /usr/lib64/xorg/modules/libshadowfb.so /ts/build/packages/xorg7/lib64/xorg/modules/libshadowfb.so
 ln /usr/lib64/xorg/modules/libvgahw.so /ts/build/packages/xorg7/lib64/xorg/modules/libvgahw.so
