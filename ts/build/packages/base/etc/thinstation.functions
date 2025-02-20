@@ -529,6 +529,13 @@ use_xrandr ()
 	fi
 }
 
+use_xinput ()
+{
+	if [ -n "$XINPUT_OPTIONS" ]; then
+		xinput $XINPUT_OPTIONS 2>/dev/null
+	fi
+}
+
 use_wallpaper ()
 {
 	if is_enabled $USE_WALLPAPER && [ -e /bin/wmsetbg ] && [ "$WMNAME" != "xfwm4" ]; then

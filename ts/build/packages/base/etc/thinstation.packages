@@ -160,6 +160,7 @@ console)
     x_numlock
     dconf_proxy_configure
     use_xrandr
+    use_xinput
     use_wallpaper
     while [ -e /tmp/.X11-unix/X$DISPLAY_NUMBER ] && [ "$reconnect" != "1" ]	; do
 	package_input
